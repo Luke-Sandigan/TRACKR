@@ -1,0 +1,21 @@
+body {
+    background-color: black;
+}
+
+#trackr-logo {
+    height: 40px;
+    width:auto;
+
+}
+
+.nav-container {
+    color: white;
+ 
+}
+
+.nav-container ul {
+    list-style-type: none;
+    color: white;
+}
+
+
