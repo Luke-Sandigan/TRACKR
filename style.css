@@ -1,5 +1,6 @@
 body {
     background-color: black;
+    font-family: Inter;
 }
 
 #trackr-logo {
@@ -18,4 +19,12 @@ body {
     color: white;
 }
 
+.header-container {
+    color:white;
+}
+#subject {
+    position:right;
+    height: 100vh;
+    width: auto;
+}
 
