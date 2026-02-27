@@ -4,27 +4,39 @@ body {
 }
 
 #trackr-logo {
-    height: 40px;
+    margin-top: -10px;
+    margin-left: 15px;
+    height: 50px;
     width:auto;
 
 }
 
 .nav-container {
+    display: flex;
     color: white;
- 
 }
 
-.nav-container ul {
+.nav-container .nav-menu {
+    display: flex;
     list-style-type: none;
+    gap: 19px;
+    margin-top: 7px;
+    margin-left: -20px;
+}
+
+.nav-container .nav-right {
+    display: flex;
+    margin-left: 400px;
+}
+
+.nav-right input {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #212121;
+    outline: none;
+    box-shadow: none;
+}
+
+.nav-right .auth-buttons {
     color: white;
 }
-
-.header-container {
-    color:white;
-}
-#subject {
-    position:right;
-    height: 100vh;
-    width: auto;
-}
-
