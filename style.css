@@ -7,36 +7,171 @@ body {
     margin-top: -10px;
     margin-left: 15px;
     height: 50px;
-    width:auto;
+    width: auto;
 
 }
 
 .nav-container {
     display: flex;
     color: white;
+    gap: 20px;
+
+    position: relative; 
+    z-index: 10; /* higher than lightning */
 }
 
 .nav-container .nav-menu {
     display: flex;
+    align-items: center;
     list-style-type: none;
     gap: 19px;
-    margin-top: 7px;
-    margin-left: -20px;
+    margin-top: 8px;
+    margin-left: -35px;
 }
 
 .nav-container .nav-right {
     display: flex;
-    margin-left: 400px;
+    justify-content: flex-end;
+    margin-right: 15px;
+    gap: 20px;
+    flex: 1;
 }
 
-.nav-right input {
-    border-radius: 5px;
-    padding: 10px;
+.nav-right .search-container  {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: #212121;
-    outline: none;
-    box-shadow: none;
+    color: #6D6D6D;
+    border-radius: 10px;
 }
 
-.nav-right .auth-buttons {
+.search-container .search-box {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    gap: 5px;
+    flex-grow: 1 1 auto;
+}
+
+.nav-right i {
+   font-size: 20px;
+}
+
+.search-container input {
+    font-family: 'Inter';
+    color:#6D6D6D;
+    font-size: 15px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    margin-right: 10px;
+    
+}
+
+.search-container input:focus::placeholder {
+    color: transparent;
+    transition: color 0.2 ease;
+}
+
+.nav-container .nav-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-container .auth-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-buttons  a {
+    text-decoration: none;
     color: white;
 }
+
+.auth-buttons a:hover {
+    text-decoration: underline;
+}
+
+.auth-buttons .signup-btn {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 25px 10px 25px;
+    border-radius: 20px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.auth-buttons .signup-btn:hover {
+    background-color: white;
+    color: #121212;
+    cursor: pointer;
+}
+
+.hero-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    position: relative; /* important */
+}
+
+.hero-container h1{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+
+}
+
+.hero-container .h1-yellow {
+    color: #FFD000;
+
+}
+
+#subject {
+    position: fixed;
+    top: -300px;
+    right: -600px;
+    height: 1500px;
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        gap: 23px;
+        flex-grow: 0 0 none;
+    }
+
+    .nav-container .nav-menu {
+        display: none;
+    }
+
+    /* .search-container input {
+        display: none;
+    } */
+    
+    .nav-container .nav-icons {
+        display: none;
+    }
+
+
+}
+
+
+
+
