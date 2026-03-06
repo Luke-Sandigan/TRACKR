@@ -17,7 +17,7 @@ body {
     gap: 20px;
 
     position: relative; 
-    z-index: 10; /* higher than lightning */
+    z-index: 10; 
 }
 
 .nav-container .nav-menu {
@@ -123,10 +123,18 @@ body {
 
 .hero-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
+    padding: 80px 60px 0px 200px;
     color: white;
-    position: relative; /* important */
+    position: relative; 
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 450px;
 }
 
 .hero-container h1{
@@ -135,11 +143,19 @@ body {
     flex-direction: column;
     justify-content: center;
     margin: 0;
+    font-size: 70px;
+    line-height: 70px;
+
 
 }
 
 .hero-container .h1-yellow {
     color: #FFD000;
+
+}
+
+.hero-container p {
+    color: #9F9797;
 
 }
 
@@ -149,6 +165,57 @@ body {
     right: -600px;
     height: 1500px;
     z-index: -1;
+}
+
+.header-btn-container {
+    display: flex;
+    gap: 20px;
+    font-family: 'Inter';
+
+} 
+
+.header-btn-container .btn-signup {
+    background-color: #FFD000;
+    height: 60px;
+    width: 140px;
+    border-radius: 40px;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.header-btn-container .btn-signup:hover {
+    background-color: #212121;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+.header-btn-container .btn-premium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    background-color: #212121;
+    color: white;
+    height: 60px;
+    width: 200px;
+    border-radius: 40px;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.header-btn-container .btn-premium:hover {
+    background-color: #FFD000;
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.btn-premium i {
+    font-size: 28px;
 }
 
 @media (max-width: 768px) {
@@ -169,6 +236,9 @@ body {
         display: none;
     }
 
+    #subject {
+        display: none;
+    }
 
 }
 
