@@ -1,0 +1,159 @@
+body {
+    background-color: black;
+    font-family: 'Inter';
+    margin: 0;
+
+}
+
+#trackr-logo {
+    margin-top: -10px;
+    margin-left: 15px;
+    height: 50px;
+    width: auto;
+
+}
+
+.nav-container {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    display: flex;
+    color: white;
+    gap: 20px;
+    z-index: 10;
+    padding: 5px;
+
+}
+
+.nav-container .nav-menu {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    gap: 19px;
+    margin-top: 8px;
+    margin-left: -35px;
+}
+
+.nav-container .nav-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    gap: 20px;
+    flex: 1;
+}
+
+.nav-right .search-container  {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #212121;
+    color: #6D6D6D;
+    border-radius: 10px;
+}
+
+.search-container .search-box {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    gap: 5px;
+    flex-grow: 1 1 auto;
+}
+
+.nav-right i {
+   font-size: 20px;
+}
+
+.search-container input {
+    font-family: 'Inter';
+    color:#6D6D6D;
+    font-size: 15px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    margin-right: 10px;
+    
+}
+
+.search-container input:focus::placeholder {
+    color: transparent;
+    transition: color 0.2 ease;
+}
+
+.nav-container .nav-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-container .auth-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-buttons  a {
+    text-decoration: none;
+    color: white;
+}
+
+.auth-buttons a:hover {
+    text-decoration: underline;
+}
+
+.auth-buttons .signup-btn {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 25px 10px 25px;
+    border-radius: 20px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.auth-buttons .signup-btn:hover {
+    background-color: white;
+    color: #121212;
+    cursor: pointer;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .nav-container {
+        gap: 23px;
+        flex-grow: 0 0 none;
+    }
+
+    .nav-container .nav-menu {
+        display: none;
+    }
+
+    /* .search-container input {
+        display: none;
+    } */
+    
+    .nav-container .nav-icons {
+        display: none;
+    }
+
+    .container-all .leftside-container {
+        display: none;
+    }
+
+
+}
+
+
+
+

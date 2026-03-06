@@ -1,0 +1,179 @@
+.container-all {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+
+}
+
+#subject2 {
+    position: absolute;
+    width: auto;;
+    height: 1500px;
+    top: -200px;
+    transform: rotateZ(15deg);
+    z-index: -1;
+    overflow: hidden;
+}
+
+.leftside-container {
+    position: relative;
+    width: 50%;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+.header-container {
+    position: absolute;
+    width: 350px;
+    padding: 50px 0px 0px 0px;
+}
+
+.header-container p{
+    margin-top: -10px;
+    color: #9F9797;
+}
+
+.signup-form-container {
+    background-color: white;
+    width: 50%;
+    min-height: 100vh;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-family: 'Inter';
+    padding: 50px 0px 180px 0px;
+}
+
+
+
+ .signup-header p{
+    margin-top: -10px;
+    color: #9F9797;
+}
+
+.signup-form {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    gap: 3px;
+}
+
+.fullname {
+
+    display: flex;
+    gap: 10px;
+}
+
+.fullname .form-group {
+    flex: 1;
+    width: 150px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.terms-condition {
+    display: flex;
+    font-size: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: -18px;
+}
+
+.create-account button {
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 30px;
+    border: none;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.create-account button:hover {
+    background-color: gray;
+    color: white;
+}
+
+.exist-account {
+    margin-top: -15px;
+    display:flex;
+    justify-content: center;
+    font-size: 15px;
+}
+
+
+
+/* ---  */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #aaa;
+}
+
+.divider span {
+    margin: 0 10px;
+    color: #777;
+    font-size: 14px;
+}
+
+.social-btn {
+    width: 350px;
+    padding: 12px;
+
+    border-radius: 30px;
+    border: 1px solid rgb(90, 90, 90);
+    background-color: #f6f6f6;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    margin: 12px 0;
+    cursor: pointer;
+
+}
+
+.social-btn img {
+    width: auto;
+    height: 15px;
+}
+
+.social-btn:hover {
+    background-color: #dcdcdc;
+}
+
+
+
