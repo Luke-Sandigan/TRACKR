@@ -127,7 +127,13 @@ body {
 }
 
 
+.auth-icon-container i:hover {
+    color: #FFD000;
+}
 
+.nav-menu li:hover {
+    color: #FFD000;
+}
 
 @media (max-width: 768px) {
     .nav-container {
