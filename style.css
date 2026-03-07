@@ -121,6 +121,15 @@ body {
     cursor: pointer;
 }
 
+
+.auth-icon-container i:hover {
+    color: gray;
+}
+
+.nav-menu li:hover {
+    color: gray;
+}
+
 .hero-container {
     display: flex;
     justify-content: space-between;
