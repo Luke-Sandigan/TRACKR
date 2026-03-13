@@ -3,6 +3,7 @@ import requests
 from werkzeug.security import generate_password_hash
 from app import app, db
 from models import User
+import requests
 
 @app.route('/')
 @app.route('/index')
