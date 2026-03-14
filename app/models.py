@@ -20,29 +20,9 @@ class User(db.Model):
     email: so.Mapped[str] = so.mapped_column(
         sa.String(64), index=True, unique=True
     )
-    contact_number: so.Mapped[str] = so.mapped_column(
-        sa.String(15), index=True, unique=True
-    )
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(
         sa.String(256)
     )
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
-
-# class Model(db.Model):
-#     track_id: so.Mapped[str] = so.mapped_column(
-#         sa.String(64), primary_key=True
-#     )
-
-#     user_id: so.Mapped[str] = so.mapped_column(
-#         sa.String(24), 
-#     )
-    
-#     product_id: so.Mapped[str] = sp.mapped_column(
-#         sa.String(64)
-#     )
-
-#     promotion: 
-
-#     product_img: 

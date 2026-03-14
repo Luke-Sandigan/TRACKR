@@ -2,14 +2,20 @@ from flask import jsonify, request
 from werkzeug.security import generate_password_hash
 from .models import User
 from . import app, db
+from flask import render_template
+
+@app.route("/")
+def home():
+    return render_template("landing-page.html")
 
 @app.route('/users', methods=['POST'])
 def register_user():
     try:
         data = request.get_json()
-
         username = data.get("username", "").strip()
         email = data.get("email", "").strip()
+        first_name = data.get("first_name", "").strip()
+        last_name = data.get("last_name", "").strip()
         password = data.get("password", "")
         
         # validate rquired fields
@@ -23,7 +29,6 @@ def register_user():
             return jsonify({"error": "Email already exists"}), 400
 
         hashed_password = generate_password_hash(password)
-
         new_user = User(username=username, email=email, password_hash=hashed_password)
         db.session.add(new_user)
         db.session.commit()
