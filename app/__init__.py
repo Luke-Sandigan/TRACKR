@@ -11,7 +11,4 @@ def create_app():
     # ties db to app
     db.init_app(app)
 
-    from .routes import bp as user_bp
-    app.register_blueprint(user_bp)
-
     return app
