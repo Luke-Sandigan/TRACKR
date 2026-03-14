@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRACKR</title>
-    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <link
       rel="stylesheet"
@@ -21,7 +22,7 @@
 
 <nav class="nav-container">
     <div class="nav-left">
-        <img src="trackr-logo.png" alt="logo" id="trackr-logo">
+        <img src="{{ url_for('static', filename='images/trackr-logo.png') }}" alt="logo" id="trackr-logo">
     </div>
 
     <ul class="nav-menu">
@@ -40,8 +41,8 @@
             
         <div class="auth-icon-container">
             <div class="auth-buttons">
-                <a href="login-page.html" class="login-link">Login</a>
-                <button onclick="window.location.href='signup-page.html'" class="signup-btn">Sign Up</button>
+                <a href="/login" class="login-link">Login</a>
+                <button onclick="window.location.href='{{ url_for('signup_page') }}'" class="signup-btn">Sign Up</button>
             </div>
 
             <div class="nav-icons">
@@ -67,7 +68,7 @@
         <p>Track price changes across online stores automatically, all in one place.</p>
 
         <div class="header-btn-container">
-            <button onclick="window.location.href='signup-page.html'"  class="btn-signup">Sign Up</button>
+            <button onclick="window.location.href='{{ url_for('signup_page') }}'"  class="btn-signup">Sign Up</button>
 
             <button class="btn-premium">
                 <i class="ph ph-arrows-in-cardinal"></i>
@@ -78,7 +79,7 @@
     </div>
 
     <div class="image-container">
-        <img src="subject.png" alt="image" id="subject">
+        <img src="{{ url_for('static', filename='images/subject.png') }}" alt="image" id="subject">
     </div>
 
 </div>

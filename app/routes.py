@@ -8,10 +8,18 @@ from flask import render_template
 def home():
     return render_template("landing-page.html")
 
+@app.route("/signup")
+def signup_page():
+    return render_template("signup-page.html")
+
+@app.route("/login")
+def login_page():
+    return render_template("login-page.html")
+
 @app.route('/users', methods=['POST'])
 def register_user():
     try:
-        data = request.get_json()
+        data = request.get_json() or request.form
         username = data.get("username", "").strip()
         email = data.get("email", "").strip()
         first_name = data.get("first_name", "").strip()
@@ -29,7 +37,13 @@ def register_user():
             return jsonify({"error": "Email already exists"}), 400
 
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, email=email, password_hash=hashed_password)
+        new_user = User(
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            password_hash=hashed_password
+        )
         db.session.add(new_user)
         db.session.commit()
 

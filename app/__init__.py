@@ -11,4 +11,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
 
+print(app.config['SQLALCHEMY_DATABASE_URI'])
+
 from . import routes, models

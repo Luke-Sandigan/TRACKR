@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="nav-bar.css" />
-    <link rel="stylesheet" href="sign-up.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav-bar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign-up.css') }}">
 
     <link
       rel="stylesheet"
@@ -23,7 +25,7 @@
 
 <nav class="nav-container">
     <div class="nav-left">
-        <img onclick="window.location.href='landing-page.html'"  src="trackr-logo.png" alt="logo" id="trackr-logo">
+        <img onclick="window.location.href='landing-page.html'"  src="{{ url_for('static', filename='images/trackr-logo.png') }}" alt="logo" id="trackr-logo">
     </div>
 
     <ul class="nav-menu">
@@ -42,8 +44,8 @@
             
         <div class="auth-icon-container">
             <div class="auth-buttons">
-                <a href="login-page.html" class="login-link">Login</a>
-                <button onclick="window.location.href='signup-page.html'" class="signup-btn">Sign Up</button>
+                <a href="/login" class="login-link">Login</a>
+                <button onclick="window.location.href='{{ url_for('signup_page') }}'" class="signup-btn">Sign Up</button>
             </div>
 
             <div class="nav-icons">
@@ -66,7 +68,7 @@
         <p> We make price tracking simple, secure, and dependable—so you can focus on saving.</p>
     </div>
 
-        <img src="subject.png" alt="image" id="subject2">
+        <img src="{{ url_for('static', filename='images/subject.png') }}" alt="image" id="subject2">
 </div>
 
 <div class="signup-form-container">
@@ -81,29 +83,29 @@
 
         <div class="form-group">
             <label for="email-address">Email Address</label>
-            <input type="text" id="email-address" required>
+            <input type="text" id="email-address" name="email" required>
         </div>
 
         <div class="fullname">
             <div class="form-group">
                 <label for="firstname">Firstname</label>
-                <input type="text" id="firstname" required>
+                <input type="text" id="firstname" name="first_name" required>
             </div>
 
             <div class="form-group">
                 <label for="lastname">Surname</label>
-                <input type="text" id="lastname" required>
+                <input type="text" id="lastname" name="last_name" required>
             </div>
         </div>
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" required>
+            <input type="text" id="username" name="username" required>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" id="password" required>
+            <input type="text" id="password" name="password" required>
         </div>
 
         <div class="form-group">
@@ -135,12 +137,12 @@
         </div>
 
         <button class="social-btn google">
-            <img src="google-logo.png" alt="">
+            <img src="{{ url_for('static', filename='images/google-logo.png') }}" alt="">
             Google
         </button>
 
         <button class="social-btn apple">
-            <img src="apple-icon.png" alt="">
+            <img src="{{ url_for('static', filename='images/apple-icon.png') }}" alt="">
             Apple
         </button>
 
