@@ -1,16 +1,7 @@
 from flask import jsonify, request
-import requests
 from werkzeug.security import generate_password_hash
-from app import app, db
-from models import User
-import requests
-
-@app.route('/')
-@app.route('/index')
-def index():
-    return "Hello, World!"
-
-# API for user processes
+from .models import User
+from . import app, db
 
 @app.route('/users', methods=['POST'])
 def register_user():

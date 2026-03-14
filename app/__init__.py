@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_cors import CORS
 from .config import Config
 
-db = SQLAlchemy()
+app = Flask(__name__)
+app.config.from_object(Config)
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+CORS(app)
 
-    # ties db to app
-    db.init_app(app)
-
-    return app
+from . import routes, models
