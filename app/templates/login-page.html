@@ -13,13 +13,16 @@
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
-    <title> Login </title>
+    <title>Login</title>
 </head>
+
 <body>
 
-    <nav class="nav-container">
+<nav class="nav-container">
     <div class="nav-left">
-        <img onclick="window.location.href='landing-page.html'"  src="{{ url_for('static', filename='images/trackr-logopng') }}" alt="logo" id="trackr-logo">
+        <img onclick="window.location.href='{{ url_for('landing_page') }}'"  
+             src="{{ url_for('static', filename='images/trackr-logo.png') }}" 
+             alt="logo" id="trackr-logo">
     </div>
 
     <ul class="nav-menu">
@@ -34,12 +37,14 @@
                 <i class="ph ph-list-magnifying-glass"></i>
                 <input type="text" id="search-track" placeholder="Search Track">
             </div>
-        </form> 
-            
+        </form>
+
         <div class="auth-icon-container">
             <div class="auth-buttons">
-                <a href="#" class="login-link">Login</a>
-                <button onclick="window.location.href='{{ url_for('signup_page') }}'" class="signup-btn">Sign Up</button>
+                <a href="{{ url_for('login') }}" class="login-link">Login</a>
+                <button onclick="window.location.href='{{ url_for('signup_page') }}'" class="signup-btn">
+                    Sign Up
+                </button>
             </div>
 
             <div class="nav-icons">
@@ -47,83 +52,32 @@
                 <i class="ph ph-seal-question"></i>
                 <i class="ph ph-globe-simple"></i>
             </div>
-         </div>
+        </div>
     </div>
 </nav>
 
+
 <div class="container-all">
 
-<div class="leftside-container">
-    <div class="header-container">
-        <h1> Track with confidence</h1>
-        <p> We make price tracking simple, secure, and dependable—so you can focus on saving.</p>
-    </div>
+    <div class="leftside-container">
+        <div class="header-container">
+            <h1>Track with confidence</h1>
+            <p>We make price tracking simple, secure, and dependable—so you can focus on saving.</p>
+        </div>
 
         <img src="{{ url_for('static', filename='images/subject.png') }}" alt="image" id="subject2">
-</div>
+    </div>
 
-<div class="login-form-container">
 
-    <div class="login-header">
-        <h1 style="font-weight: bold;" > Welcome back! </h1>
-        <p > Log in now and start tracking new products! </p>
+    <div class="login-form-container">
+
+        {% block content %}
+
+        {% endblock %}
 
     </div>
 
-    <form class="login-form">
-
-        <div class="form-group">
-            <label for="username">Email/Username</label>
-            <input type="text" id="username">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="text" id="password">
-        </div>
-
-        <div class="forgot-password">
-            <a href="" style="color: black"> Forgot password </a>
-        </div>
-
-
-        <div class="login-account">
-            <div class="form-group">
-                  <button> Login </button>
-            </div> 
-        </div>
-
-        <div class="exist-account">
-            <p> Don't have an account yet? <a href="url" style="font-weight: bold; color: black;"> Sign Up</a></p></p>
-        </div>
-
-        <div class="social-login">
-
-
-        <div class="divider">
-            <span>Or log in with</span>
-        </div>
-
-        <button class="social-btn google">
-            <img src="{{ url_for('static', filename='images/google-logo.png') }}" alt="">
-            Google
-        </button>
-
-        <button class="social-btn apple">
-            <img src="{{ url_for('static', filename='images/apple-icon.png') }}" alt="">
-            Apple
-        </button>
-
-        </div>
-
-
-    </form>
-
-
-</div>
-    
 </div>
 
-    
 </body>
 </html>

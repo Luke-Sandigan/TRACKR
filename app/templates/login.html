@@ -1,0 +1,51 @@
+{% extends "login-page.html" %}
+
+{% block content %}
+
+<div class="login-header">
+    <h1 style="font-weight: bold;">Welcome back!</h1>
+    <p>Log in now and start tracking new products!</p>
+</div>
+
+<form method="POST" action="{{ url_for('login') }}">
+
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.username.label }}
+        {{ form.username(class="form-control") }}
+
+        {% for error in form.username.errors %}
+            <span style="color:red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password(class="form-control") }}
+
+        {% for error in form.password.errors %}
+            <span style="color:red;">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.remember_me() }} {{ form.remember_me.label }}
+    </div>
+
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+
+    <div class="exist-account">
+        <p>
+            Don't have an account yet?
+            <a href="{{ url_for('signup_page') }}" style="font-weight:bold; color:black;">
+                Sign Up
+            </a>
+        </p>
+    </div>
+
+</form>
+
+{% endblock %}

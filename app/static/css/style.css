@@ -140,10 +140,14 @@ body {
 }
 
 .header-container {
+    margin-top: 100px;
+    margin-left: 150px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     max-width: 450px;
+    
 }
 
 .hero-container h1{

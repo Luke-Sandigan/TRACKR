@@ -5,8 +5,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'postgresql+psycopg2://postgres:hr@localhost:5432/trackr_db' 
 
-    # 'postgresql://postgres:secret@localhost:5432/mydb' if postgre
-
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # for reinstalling cached packages

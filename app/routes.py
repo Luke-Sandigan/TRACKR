@@ -1,8 +1,11 @@
 from flask import jsonify, request
 from werkzeug.security import generate_password_hash
-from .models import User
+from app.models import User
 from . import app, db
-from flask import render_template
+from flask import render_template, redirect, url_for, flash
+from flask_login import current_user, login_user, login_required, logout_user
+from .forms import LoginForm
+import sqlalchemy as sa
 
 @app.route("/")
 def home():
@@ -12,9 +15,20 @@ def home():
 def signup_page():
     return render_template("signup-page.html")
 
-@app.route("/login")
-def login_page():
-    return render_template("login-page.html")
+@app.route("/landing")
+def landing_page():
+    return render_template("landing-page.html")
+
+@app.route("/debug-user")
+def debug_user():
+    if current_user.is_authenticated:
+        return f"Logged in as {current_user.username}"
+    return "Not logged in"
+
+@app.route("/profile")
+@login_required
+def profile_page():
+    return render_template("profile.html")
 
 @app.route('/users', methods=['POST'])
 def register_user():
@@ -52,18 +66,44 @@ def register_user():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    try:
-        user = User.query.get(user_id)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('landing_page'))
 
-        if not user:
-            return jsonify({"error": "User not found"}), 404
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.username == form.username.data)
+        )
+
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('profile_page'))
+
+    return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('landing_page'))
+    
+@app.route('/delete-account', methods=['POST'])
+@login_required
+def delete_account():
+    try:
+        user = current_user
 
         db.session.delete(user)
         db.session.commit()
 
-        return jsonify({"message": "User deleted successfully"}), 200
+        logout_user()  # important: clear session
+
+        return jsonify({"message": "Account deleted"}), 200
 
     except Exception as e:
         db.session.rollback()
@@ -98,12 +138,3 @@ def get_user(user_id):
         "email": user.email
     })     
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-
-    if form.validate_on_submit():
-        flash(f"Login requested for user {form.username.data}, remember_me={form.remember_me.data}")
-        return redirect(url_for("index"))
-
-    return render_template("login.html", title="Sign In", form=form)

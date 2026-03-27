@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../static/css/nav-bar.css" />
-    <link rel="stylesheet" href="../static/css/profile-style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav-bar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile-style.css') }}" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -175,7 +175,29 @@
                   Logout
                 </button>
           </div>
+<script>
+document.querySelector(".delete").addEventListener("click", async function() {
+    const confirmDelete = confirm("Are you sure you want to delete your account?");
+    if (!confirmDelete) return;
 
+    const response = await fetch("/delete-account", {
+        method: "POST"
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        alert("Account deleted");
+        window.location.href = "/";
+    } else {
+        alert(result.error);
+    }
+});
+
+document.querySelector(".logout").addEventListener("click", function() {
+    window.location.href = "/logout";
+});
+</script>
   
 </body>
 
