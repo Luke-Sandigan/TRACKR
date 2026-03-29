@@ -11,7 +11,7 @@
 
     {{ form.hidden_tag() }}
 
-    <div class="form-group">
+    <div class="form-group" >
         {{ form.username.label }}
         {{ form.username(class="form-control") }}
 
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 15px;">
         {{ form.password.label }}
         {{ form.password(class="form-control") }}
 
@@ -29,15 +29,12 @@
         {% endfor %}
     </div>
 
-    <div class="form-group">
-        {{ form.remember_me() }} {{ form.remember_me.label }}
-    </div>
 
-    <div class="form-group">
+    <div class="form-group"  style="margin-top: 15px;">
         {{ form.submit(class="btn btn-primary") }}
     </div>
 
-    <div class="exist-account">
+    <div class="exist-account" style="margin-top: 15px;"> 
         <p>
             Don't have an account yet?
             <a href="{{ url_for('signup_page') }}" style="font-weight:bold; color:black;">
