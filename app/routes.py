@@ -60,7 +60,6 @@ def register_user():
         )
         db.session.add(new_user)
         db.session.commit()
-        
         return jsonify({"message": "User Registered Successfully"}), 201
         
     except Exception as e:
@@ -68,8 +67,8 @@ def register_user():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('landing_page'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('landing_page'))
 
     form = LoginForm()
 
