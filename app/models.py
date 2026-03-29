@@ -39,3 +39,7 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+google_id: so.Mapped[Optional[str]] = so.mapped_column(
+    sa.String(128), unique=True, nullable=True
+)

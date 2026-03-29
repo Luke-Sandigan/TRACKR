@@ -5,6 +5,7 @@ from . import app, db
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, login_required, logout_user
 from .forms import LoginForm
+from app import google 
 import sqlalchemy as sa
 
 @app.route("/")
@@ -29,7 +30,39 @@ def debug_user():
 @login_required
 def profile_page():
     return render_template("profile.html")
+@app.route('/auth/google')
+def google_login():
+    redirect_uri = 'http://localhost:5000/auth/google/callback'
+    return google.authorize_redirect(redirect_uri)
 
+@app.route('/auth/google/callback')
+def google_callback():
+    token = google.authorize_access_token()
+    user_info = token.get('userinfo')
+
+    # Check if user already exists by google_id
+    user = User.query.filter_by(google_id=user_info['sub']).first()
+
+    if not user:
+        # Check if email already registered (normal account)
+        user = User.query.filter_by(email=user_info['email']).first()
+        if user:
+            # Link their google account to existing account
+            user.google_id = user_info['sub']
+        else:
+            # Create new user
+            user = User(
+                google_id=user_info['sub'],
+                email=user_info['email'],
+                first_name=user_info.get('given_name', ''),
+                last_name=user_info.get('family_name', ''),
+                username=user_info['email'].split('@')[0]  # temp username from email
+            )
+            db.session.add(user)
+
+    db.session.commit()
+    login_user(user)
+    return redirect(url_for('profile_page'))
 @app.route('/users', methods=['POST'])
 def register_user():
     try:

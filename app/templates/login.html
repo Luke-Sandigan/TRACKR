@@ -45,4 +45,15 @@
 
 </form>
 
+<div class="social-login" style="width: 350px;">
+    <div class="divider">
+        <span>Or sign in with</span>
+    </div>
+
+    <button class="social-btn google" onclick="window.location.href='/auth/google'">
+        <img src="{{ url_for('static', filename='images/google-logo.png') }}" alt="">
+        Google
+    </button>
+</div>
+
 {% endblock %}
