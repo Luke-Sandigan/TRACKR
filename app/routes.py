@@ -60,7 +60,7 @@ def register_user():
         )
         db.session.add(new_user)
         db.session.commit()
-
+        
         return jsonify({"message": "User Registered Successfully"}), 201
         
     except Exception as e:
