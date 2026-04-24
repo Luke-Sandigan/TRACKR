@@ -27,7 +27,7 @@ def landing_page():
 @bp.route("/profile")
 @login_required
 def profile_page():
-    return render_template("profile.html")
+    return render_template("profile.html", user=current_user)
 
 
 @bp.route("/debug-user")
@@ -106,6 +106,25 @@ def register_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+@bp.route('/update_profile', methods=['PUT'])
+@login_required
+def update_profile():
+    data = request.get_json()
+    
+    current_user.first_name = data.get('first_name')
+    current_user.last_name = data.get('last_name')
+    current_user.email = data.get('email')
+    
+    new_password = data.get('password')
+    if new_password and len(new_password) > 0:
+        current_user.password = generate_password_hash(new_password)
+    
+    try:
+        db.session.commit()
+        return jsonify({"success": True, "message": "Profile updated successfully!"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "message": "Failed to update database."}), 500
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -130,11 +149,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("main.landing_page"))
-
-
-# -------------------
-# USER MANAGEMENT
-# -------------------
 
 @bp.route("/delete-account", methods=["POST"])
 @login_required

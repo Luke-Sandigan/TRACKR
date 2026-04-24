@@ -480,3 +480,7 @@ main {
   flex-direction: row;
   gap: 80px;
 }
+
+#editModal {
+    display: none;
+}

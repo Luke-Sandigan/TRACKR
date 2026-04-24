@@ -69,7 +69,7 @@
 
 <main>
 
-<div class="pfp-container" onclick="document.getElementById('pfpFileInput').click()">
+<div class="pfp-container" id="pfpContainer" onclick="document.getElementById('pfpFileInput').click()">
 
     <img id="profileImage"  src="../static/images/default-pfp.png" alt="pfp-image">
 
@@ -84,7 +84,7 @@
     <div class="profile-info">
 
         <div class="username-label">Username</div>
-        <div class="username-text" id="displayUsername">Javaswingx</div>
+        <div class="username-text" id="displayUsername">{{ user.username }}</div>
 
         <div class="profile-btns">
           <button class="btn-yellow" id="editProfileBtn">
@@ -221,7 +221,7 @@
   </div>
 </div>
 
-<script src="js-profile.js"></script>
+<script src="{{ url_for('static', filename='js/js-profile.js') }}"></script>
 
 </body>
 
