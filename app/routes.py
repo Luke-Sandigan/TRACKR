@@ -192,3 +192,18 @@ def get_user(user_id):
         "last_name": user.last_name,
         "email": user.email
     })
+
+# shopee scraper
+from app.services.shopee_scraper import scrape_shopee
+
+bp = Blueprint("scraper", __name__)
+
+@bp.route("/scrape/shopee", methods=["POST"])
+def scrape():
+    data = request.get_json()
+
+    query = data.get("query")
+
+    result = scrape_shopee(query)
+
+    return jsonify(result)
