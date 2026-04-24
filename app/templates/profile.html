@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav-bar.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile-style.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/nav-bar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile-style.css') }}" /> -->
+
+    <link rel="stylesheet" href="../static/css/nav-bar.css">
+    <link rel="stylesheet" href="../static/css/profile-style.css">
     <link
       rel="stylesheet"
       type="text/css"
@@ -175,30 +178,51 @@
                   Logout
                 </button>
           </div>
-<script>
-document.querySelector(".delete").addEventListener("click", async function() {
-    const confirmDelete = confirm("Are you sure you want to delete your account?");
-    if (!confirmDelete) return;
 
-    const response = await fetch("/delete-account", {
-        method: "POST"
-    });
 
-    const result = await response.json();
+<div class="cs-editModal" id="editModal">
+  <div class="cs-modalContainer">
 
-    if (response.ok) {
-        alert("Account deleted");
-        window.location.href = "/";
-    } else {
-        alert(result.error);
-    }
-});
+    <h2>Edit Profile</h2>
 
-document.querySelector(".logout").addEventListener("click", function() {
-    window.location.href = "/logout";
-});
-</script>
-  
+    <div class="cs-modalContents">
+
+      <div class="cs-row">
+        <div class="cs-input-group">
+          <label class="cs-label">Firstname</label>
+          <input id="editFirstName" placeholder="First Name">
+        </div>
+
+        <div class="cs-input-group">
+          <label class="cs-label">Lastname</label>
+          <input id="editLastName" placeholder="Last Name">
+        </div>
+      </div>
+
+      <div class="cs-row">
+        <div class="cs-input-group">
+          <label class="cs-label">Email</label>
+          <input id="editEmail" placeholder="Add Email">
+        </div>
+
+        <div class="cs-input-group">
+          <label class="cs-label">Change Password</label>
+          <input id="editPassword" type="password" placeholder="New Password">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cs-btn-container">
+      <button class="btns" id="saveProfile">Save</button>
+      <button class="btns" id="closeModal">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="js-profile.js"></script>
+
 </body>
 
 </html>

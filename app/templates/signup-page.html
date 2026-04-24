@@ -136,10 +136,13 @@
             <span>Or sign up with</span>
         </div>
 
-        <button class="social-btn google">
+        <button class="social-btn google" onclick="window.location.href='/auth/google'">
             <img src="{{ url_for('static', filename='images/google-logo.png') }}" alt="">
             Google
         </button>
+            
+            
+        
 
         <button class="social-btn apple">
             <img src="{{ url_for('static', filename='images/apple-icon.png') }}" alt="">

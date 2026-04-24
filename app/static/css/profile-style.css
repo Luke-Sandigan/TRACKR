@@ -392,3 +392,91 @@ main {
   transform: translateY(-1px);
   box-shadow: 0 4px 20px rgba(245,200,0,0.4);
 }
+
+
+.cs-editModal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.cs-modalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background: rgb(25, 25, 25); 
+  border-radius: 20px;
+  padding: 20px; 
+  width: 700px;
+}
+
+.cs-modalContainer h2 {
+  color: white;
+  text-align: center;
+}
+
+.cs-modalContents {
+  background-color: #2E2E2E;
+  padding: 20px;
+  border-radius: 10px;
+  height: 150px;
+  width: 600px; 
+}
+
+
+.cs-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+
+.cs-input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  font-weight: bold;
+}
+
+.cs-label {
+  color: white;
+  margin-bottom: 5px;
+}
+
+
+.cs-input-group input {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+}
+
+.cs-btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cs-btn-container button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.cs-input-group input {
+    background: transparent;
+    border: 1px solid white;
+}
+
+.cs-btn-container .btns {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+}
