@@ -7,7 +7,7 @@
     <p>Log in now and start tracking new products!</p>
 </div>
 
-<form method="POST" action="{{ url_for('login') }}" class="login-form">
+<form method="POST" action="{{ url_for('main.login') }}" class="login-form">
 
     {{ form.hidden_tag() }}
 
@@ -37,7 +37,7 @@
     <div class="exist-account" style="margin-top: 15px;"> 
         <p>
             Don't have an account yet?
-            <a href="{{ url_for('signup_page') }}" style="font-weight:bold; color:black;">
+            <a href="{{ url_for('main.signup_page') }}" style="font-weight:bold; color:black;">
                 Sign Up
             </a>
         </p>

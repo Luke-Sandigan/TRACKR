@@ -1,29 +1,42 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+
+from .extensions import db, login, oauth
 from .config import Config
-from flask_login import LoginManager
-from authlib.integrations.flask_client import OAuth 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'trackr_db12345'
-app.config.from_object(Config)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-CORS(app)
 
-login = LoginManager(app)
-oauth = OAuth(app)
+def create_app():
+    app = Flask(__name__)
 
-google = oauth.register(
-    name='google',
-    client_id=app.config['GOOGLE_CLIENT_ID'],
-    client_secret=app.config['GOOGLE_CLIENT_SECRET'],
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'}
-)
+    # config
+    app.config.from_object(Config)
+    app.config["SECRET_KEY"] = "trackr_db12345"
 
-print(app.config['SQLALCHEMY_DATABASE_URL'])
+    # init extensions
+    db.init_app(app)
+    login.init_app(app)
+    oauth.init_app(app)
 
-from . import routes, models
+    Migrate(app, db)
+    CORS(app)
+
+    # register blueprint
+    from .routes import bp
+    app.register_blueprint(bp)
+
+    # register google oauth (safe here)
+    oauth.register(
+        name="google",
+        client_id=app.config["GOOGLE_CLIENT_ID"],
+        client_secret=app.config["GOOGLE_CLIENT_SECRET"],
+        server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+        client_kwargs={"scope": "openid email profile"},
+    )
+
+    # register models
+    from . import models
+
+    print(app.config["SQLALCHEMY_DATABASE_URI"])
+
+    return app
