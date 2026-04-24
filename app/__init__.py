@@ -15,6 +15,6 @@ CORS(app)
 
 login = LoginManager(app)
 
-print(app.config['SQLALCHEMY_DATABASE_URI'])
+print(app.config['SQLALCHEMY_DATABASE_URL'])
 
 from . import routes, models
