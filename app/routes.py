@@ -194,16 +194,16 @@ def get_user(user_id):
     })
 
 # shopee scraper
-from app.services.shopee_scraper import scrape_shopee
+# from app.services.shopee_scraper import scrape_shopee
 
-bp = Blueprint("scraper", __name__)
+# bp = Blueprint("scraper", __name__)
 
-@bp.route("/scrape/shopee", methods=["POST"])
-def scrape():
-    data = request.get_json()
+# @bp.route("/scrape/shopee", methods=["POST"])
+# def scrape():
+#     data = request.get_json()
 
-    query = data.get("query")
+#     query = data.get("query")
 
-    result = scrape_shopee(query)
+#     result = scrape_shopee(query)
 
-    return jsonify(result)
+#     return jsonify(result)
