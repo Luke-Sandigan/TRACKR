@@ -36,7 +36,15 @@ def debug_user():
         return f"Logged in as {current_user.username}"
     return "Not logged in"
 
-@bp.route("/auth/google")
+@bp.route("/tracks")
+def tracks_page():
+    return render_template("tracks.html")
+
+@bp.route("/profile")
+# @login_required
+def profile_page():
+    return render_template("profile.html")
+@bp.route('/auth/google')
 def google_login():
     redirect_uri = "http://localhost:5000/auth/google/callback"
     return oauth.google.authorize_redirect(redirect_uri)

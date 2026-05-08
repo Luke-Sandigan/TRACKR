@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Track Your Shit Motherfucker </title>
+    <link rel="stylesheet" href="../static/css/nav-bar.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+</head>
+
+<body>
+
+<nav class="nav-container">
+    <div class="nav-left">
+        <!-- <img src="{{ url_for('static', filename='images/trackr-logo.png') }}" alt="logo" id="trackr-logo"> -->
+         <img src="..\app\static\images\trackr-logo.png" alt="logo">
+    </div>
+
+    <ul class="nav-menu">
+        <li>Start Tracking <i class="ph ph-caret-down"></i></li>
+        <li>Upload Track <i class="ph ph-caret-down"></i></li>
+        <li>Browse Track <i class="ph ph-caret-down"></i></li>
+    </ul>
+
+    <div class="nav-right">
+        <form class="search-container">
+            <div class="search-box">
+                <i class="ph ph-list-magnifying-glass"></i>
+                <input type="text" id="search-track" placeholder="Search Track">
+            </div>
+        </form> 
+            
+        <div class="auth-icon-container">
+            <div class="auth-buttons">
+                <a href="/login" class="login-link">Login</a>
+                <button onclick="window.location.href='{{ url_for('signup_page') }}'" class="signup-btn">Sign Up</button>
+            </div>
+
+            <div class="nav-icons">
+                <i class="ph ph-download-simple"></i>
+                <i class="ph ph-seal-question"></i>
+                <i class="ph ph-globe-simple"></i>
+            </div>
+         </div>
+
+    </div>
+</nav>
+
+<button class="cs-btn-style js-menu"> <i class="ph ph-arrow-fat-lines-right"></i> </button>
+<div class="cs-overlay js-overlay"> </div>
+<div class="cs-sidebar js-sidebar">
+    <div class="cs-btn-container">
+    <p> Menu </p>
+        <button class="cs-close-btn js-close-btn"> <i class="ph ph-arrow-fat-lines-left"></i> </button>
+    </div>
+    
+    <ul class="list">
+        <li> <a href="" class="goTracks"> <i class="ph ph-chart-polar"></i> Tracks </a> </li>
+        <li> <a href="" class="goProfile"> <i class="ph ph-lego-smiley"></i> Profile </a> </li>     
+    </ul>
+</div>
+
+
+
+
+
+<script src="js-main.js"></script>
+    
+</body>
+
+</html>

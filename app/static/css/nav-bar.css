@@ -160,6 +160,74 @@ body {
 
 }
 
+.logout-link {
+    padding: 10px 20px 10px 20px;
+    border: 1px solid white;
+    border-radius: 20px;
+
+    &:hover {
+        background-color: #212121;
+    }
+}
 
 
+.recent-searches {
+    position: absolute;
+    top: 140px; 
+    right: 40px;
+    width: 280px;
 
+    display: flex;
+    flex-direction: column;
+
+    background-color: #121212;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+    overflow: hidden;
+    z-index: 999;
+}
+
+
+.recent-searches::before {
+    content: "Recent Searches";
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #888;
+    border-bottom: 1px solid #2a2a2a;
+    letter-spacing: 0.5px;
+}
+
+/* each item */
+.recent-item {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #e6e6e6;
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* hover effect matching dark UI */
+.recent-item:hover {
+    background-color: #212121;
+    color: #FFD000;
+}
+
+/* smooth appearance */
+.recent-searches {
+    animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

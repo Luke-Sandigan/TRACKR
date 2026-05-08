@@ -4,16 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/nav-bar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tracks.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile-style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
     <title>{% block title %}Trackr{% endblock %}</title>
 </head>
 
 <body>
 
+<!-- NAVBAR (ONLY HERE) -->
+<nav class="nav-container">
+    <div class="nav-left">
+        <img src="{{ url_for('static', filename='images/trackr-logo.png') }}" alt="logo" id="trackr-logo">
+    </div>
+
+    <ul class="nav-menu">
+        <li>Browse Collection <i class="ph ph-caret-down"></i></li>
+    </ul>
+
+    <div class="nav-right">
+
+        {% block navbar_search %}{% endblock %}
+
+        
+        <div class="auth-icon-container">
+            <div class="auth-buttons">
+                <a href="/login" class="logout-link">Logout</a>
+            </div>
+            
+            <div class="nav-icons">
+                <i class="ph ph-download-simple"></i>
+                <i class="ph ph-seal-question"></i>
+                <i class="ph ph-globe-simple"></i>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- SIDEBAR (ONLY HERE) -->
+<sidebar>
+    <button class="cs-btn-style js-menu"> <i class="ph ph-arrow-fat-lines-right"></i> </button>
+    <div class="cs-overlay js-overlay"> </div>
+    <div class="cs-sidebar js-sidebar">
+        <div class="cs-btn-container">
+        <div class="menu"> Menu </div> 
+            <button class="cs-close-btn js-close-btn"> <i class="ph ph-arrow-fat-lines-left"></i> </button>
+        </div>
+        
+        <ul class="list">
+            <li> <a href="" class="goProfile"> <i class="ph ph-lego-smiley"></i> Profile </a> </li>     
+        </ul>
+
+    <div href=""  class="listLabel"> <span>  Shelf </span> </div>
+    <div class="addListContainer">     
+        <input class="addList" type="text" placeholder="Add Shelf">
+        <button class="addListButton"> Add</button>
+    </div>
+
+
+    <div class="listParent"> 
+    </div>
+
+    </div>
+</sidebar>
+<!-- PAGE CONTENT -->
 {% block content %}{% endblock %}
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/js-main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tracks.js') }}"></script>
+<script src="{{ url_for('static', filename='js/js-profile.js') }}"></script>
+
+{% block scripts %}{% endblock %}
 
 </body>
 </html>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Tracks{% endblock %}
+{% block navbar_search %}
+
+<form class="search-container">
+    <div class="search-box">
+        <i class="ph ph-list-magnifying-glass"></i>
+        <input type="text" class="searchTrackInput" placeholder="Search Collection">
+    </div>
+</form>
+
+{% endblock %}
+
+{% block content %}
+
+<main>
+               <div class="recent-searches"></div>   
+<section>
+    <div class="contentContainer">
+
+        <div class="addLinkContainer">
+            <input type="text" class="addName" placeholder="Name">
+            <input type="text" class="addLink" placeholder="Add Your Link Here"> 
+            <button class="addTrackButton"> Add </button>
+        </div>
+
+        <div class="header">
+            <div class="headerContent">  </div>
+        </div>
+
+        <div class="tracks"> 
+            <div class="addTrack"></div>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/js-search.js') }}"></script>
+{% endblock %}

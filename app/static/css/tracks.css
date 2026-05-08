@@ -1,0 +1,225 @@
+body {
+    height: 100vh;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===================== */
+/* SECTION LAYOUT */
+/* ===================== */
+
+section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 30px;
+    color: white;
+    width: 100%;
+}
+
+/* ===================== */
+/* MAIN CONTAINER */
+/* ===================== */
+
+.contentContainer {
+    width: 800px;
+    max-width: 800px;
+    height: 100vh;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* ===================== */
+/* HEADER */
+/* ===================== */
+
+.header {
+    border: 1px solid white;
+    border-radius: 50px;
+    padding: 10px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+
+    margin-bottom: 30px;
+    font-weight: bolder;
+}
+
+/* ===================== */
+/* TRACK ROW */
+/* ===================== */
+
+.addTrack {
+    border: 1px solid white;
+    height: 80px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px; /* 👈 important safety spacing */
+
+    padding: 0 15px;
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+/* Remove button */
+.removeTrackBtn {
+    background-color: rgb(113, 0, 0);
+    color: white;
+    font-weight: bold;
+
+    width: 35px;
+    height: 30px;
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+    margin-left: 15px;
+
+    transition: background-color 0.3s ease;
+}
+
+.removeTrackBtn:hover {
+    background-color: gray;
+}
+
+.removeTrackBtn:active {
+    background-color: rgb(113, 0, 0);
+}
+
+/* ===================== */
+/* TRACKS CONTAINER */
+/* ===================== */
+
+.tracks {
+    width: 100%;
+}
+
+/* ===================== */
+/* LIST SECTION */
+/* ===================== */
+
+.listLabel {
+    margin-top: 15px;
+    margin-left: 30px;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.addListContainer {
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.addList {
+    height: 20px;
+    width: 145px;
+    padding: 5px;
+}
+
+.addListButton {
+    height: 33px;
+    width: 45px;
+}
+
+/* ===================== */
+/* LIST ITEMS */
+/* ===================== */
+
+.grandChild {
+    height: 20px;
+    width: 157px;
+    padding: 5px;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.grandChild:hover {
+    background-color: gray;
+    color: white;
+}
+
+.listParent {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.listChild {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+}
+
+.removeList {
+    background-color: rgb(113, 0, 0);
+    color: white;
+    font-weight: bolder;
+    width: 35px;
+}
+
+.removeList:hover {
+    background-color: gray;
+}
+
+/* ===================== */
+/* ADD TRACK INPUT AREA */
+/* ===================== */
+
+.addLinkContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.addLinkContainer input {
+    height: 25px;
+    padding: 5px;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+.addTrackButton {
+    height: 38px;
+    width: 50px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.addTrackButton:hover {
+    background-color: rgb(216, 219, 22);
+}
+
+.trackName {
+    flex: 1 1 0;      /* 👈 stronger flex rule */
+    min-width: 0;     /* required */
+    width: 0;         /* forces shrink */
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    display: block;   /* ensures proper box behavior */
+}

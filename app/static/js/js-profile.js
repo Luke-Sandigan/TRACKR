@@ -1,17 +1,13 @@
-console.log("JS loaded");
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log("its running");
+    console.log("Profile JS running");
 
+    // =====================
+    // PFP UPLOAD
+    // =====================
     const fileInput = document.getElementById("pfpFileInput");
     const profileImage = document.getElementById("profileImage");
-    const container = document.getElementById("pfpContainer");
-
-    const editBtn = document.getElementById("editProfileBtn");
-    const closeBtn = document.getElementById("closeModal");
-    const saveBtn = document.getElementById("saveProfile");
-    const modal = document.getElementById("editModal");
+    const container = document.querySelector(".pfp-container");
 
     if (container && fileInput && profileImage) {
         container.addEventListener("click", () => {
@@ -22,63 +18,85 @@ document.addEventListener("DOMContentLoaded", () => {
             const file = fileInput.files[0];
 
             if (file && file.type.startsWith("image/")) {
-                const imageURL = URL.createObjectURL(file);
-                profileImage.src = imageURL;
+                profileImage.src = URL.createObjectURL(file);
             } else {
                 alert("Please select a valid image file.");
             }
         });
     }
 
-    if (editBtn && modal) {
-        editBtn.addEventListener("click", () => {
-            const firstname = document.getElementById("displayFirstname")?.textContent.trim() || "";
-            const lastname = document.getElementById("displaySurname")?.textContent.trim() || "";
-        
-            document.getElementById("editFirstName").value = firstname;
-            document.getElementById("editLastName").value = lastname;
-            document.getElementById("editPassword").value = "";
+    // =====================
+    // EDIT MODAL
+    // =====================
+    const editBtn = document.getElementById("editProfileBtn");
+    const editModal = document.getElementById("editModal");
+    const closeBtn = document.getElementById("closeModal");
+    const saveBtn = document.getElementById("saveProfile");
 
-            modal.style.display = "flex";
+    if (editBtn && editModal) {
+        editBtn.addEventListener("click", () => {
+            editModal.style.display = "flex";
         });
     }
-    
-    if (saveBtn && modal) {
-        saveBtn.addEventListener("click", async () => {
-            const data = {
-            email: document.getElementById("editEmail").value.trim(),
-            first_name: document.getElementById("editFirstName").value.trim(),
-            last_name: document.getElementById("editLastName").value.trim(),
-            password: document.getElementById("editPassword").value
-        };
 
-        try {
-            const response = await fetch("/update_profile", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+    if (closeBtn && editModal) {
+        closeBtn.addEventListener("click", () => {
+            editModal.style.display = "none";
+        });
+    }
 
-            const result = await response.json();
-            if (response.ok) {
-                alert(result.message);
-                window.location.href = "/login";
-            } else {
-                alert(result.error);
-            }
+    if (saveBtn && editModal) {
+        saveBtn.addEventListener("click", () => {
+            editModal.style.display = "none";
+        });
+    }
 
-        } catch (err) {
-            console.error(err);
-            alert("Something went wrong. Please try again.");
+    // =====================
+    // FAVORITE SHELVES
+    // =====================
+    const addBtn = document.getElementById("addFavoriteShelfBtn");
+    const listContainer = document.getElementById("favoriteShelfList");
+
+    if (!addBtn || !listContainer) {
+        console.warn("Favorite shelf UI not found");
+        return;
+    }
+
+    let favorites =
+        JSON.parse(localStorage.getItem("favoriteShelves")) || [];
+
+    function render() {
+        listContainer.innerHTML = favorites
+            .map(s => `<div class="favorite-shelf-item">${s}</div>`)
+            .join("");
+    }
+
+    render();
+
+    addBtn.addEventListener("click", () => {
+
+        // SAFE MODE (no dependency on lists)
+        const shelf = prompt("Enter shelf name:");
+
+        if (!shelf) return;
+
+        const trimmed = shelf.trim();
+
+        if (!trimmed) return;
+
+        if (favorites.includes(trimmed)) {
+            alert("Already added");
+            return;
         }
 
-            modal.style.display = "none";
-        });
-    }
+        favorites.push(trimmed);
 
-    if (closeBtn && modal) {
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
-    }
+        localStorage.setItem(
+            "favoriteShelves",
+            JSON.stringify(favorites)
+        );
+
+        render();
+    });
+
 });

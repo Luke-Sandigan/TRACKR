@@ -273,6 +273,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 40px;
+  margin-top: -670px;
 }
 
 .cards {
@@ -481,6 +482,22 @@ main {
   gap: 80px;
 }
 
-#editModal {
-    display: none;
+#favoriteShelfList {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.favorite-shelf-item {
+    background: #212121;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.favorite-shelf-item:hover {
+    background: #2a2a2a;
 }
