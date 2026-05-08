@@ -9,6 +9,10 @@ from .forms import LoginForm
 
 bp = Blueprint("main", __name__)
 
+# =====================
+# PAGES
+# =====================
+
 @bp.route("/")
 def home():
     return render_template("landing-page.html")
@@ -30,20 +34,22 @@ def profile_page():
     return render_template("profile.html", user=current_user)
 
 
+@bp.route("/tracks")
+def tracks_page():
+    return render_template("tracks.html")
+
+
 @bp.route("/debug-user")
 def debug_user():
     if current_user.is_authenticated:
         return f"Logged in as {current_user.username}"
     return "Not logged in"
 
-@bp.route("/tracks")
-def tracks_page():
-    return render_template("tracks.html")
 
-@bp.route("/profile")
-# @login_required
-def profile_page():
-    return render_template("profile.html")
+# =====================
+# AUTH (GOOGLE)
+# =====================
+
 @bp.route('/auth/google')
 def google_login():
     redirect_uri = "http://localhost:5000/auth/google/callback"
@@ -76,6 +82,11 @@ def google_callback():
     login_user(user)
 
     return redirect(url_for("main.profile_page"))
+
+
+# =====================
+# USER CRUD
+# =====================
 
 @bp.route("/users", methods=["POST"])
 def register_user():
@@ -114,25 +125,31 @@ def register_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
 @bp.route('/update_profile', methods=['PUT'])
 @login_required
 def update_profile():
     data = request.get_json()
-    
+
     current_user.first_name = data.get('first_name')
     current_user.last_name = data.get('last_name')
     current_user.email = data.get('email')
-    
+
     new_password = data.get('password')
-    if new_password and len(new_password) > 0:
-        current_user.password = generate_password_hash(new_password)
-    
+    if new_password:
+        current_user.password_hash = generate_password_hash(new_password)
+
     try:
         db.session.commit()
         return jsonify({"success": True, "message": "Profile updated successfully!"}), 200
-    except Exception as e:
+    except Exception:
         db.session.rollback()
         return jsonify({"success": False, "message": "Failed to update database."}), 500
+
+
+# =====================
+# LOGIN / LOGOUT
+# =====================
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -158,6 +175,11 @@ def logout():
     logout_user()
     return redirect(url_for("main.landing_page"))
 
+
+# =====================
+# DELETE ACCOUNT
+# =====================
+
 @bp.route("/delete-account", methods=["POST"])
 @login_required
 def delete_account():
@@ -165,13 +187,16 @@ def delete_account():
         db.session.delete(current_user)
         db.session.commit()
         logout_user()
-
         return jsonify({"message": "Account deleted"}), 200
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
+# =====================
+# USER LOOKUP
+# =====================
 
 @bp.route("/users/<int:user_id>", methods=["GET"])
 def search_user(user_id):
@@ -184,7 +209,7 @@ def search_user(user_id):
         "id": user.user_id,
         "username": user.username,
         "email": user.email
-    }), 200
+    })
 
 
 @bp.route("/user/<int:user_id>")
@@ -200,18 +225,3 @@ def get_user(user_id):
         "last_name": user.last_name,
         "email": user.email
     })
-
-# shopee scraper
-# from app.services.shopee_scraper import scrape_shopee
-
-# bp = Blueprint("scraper", __name__)
-
-# @bp.route("/scrape/shopee", methods=["POST"])
-# def scrape():
-#     data = request.get_json()
-
-#     query = data.get("query")
-
-#     result = scrape_shopee(query)
-
-#     return jsonify(result)
