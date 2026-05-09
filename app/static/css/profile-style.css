@@ -1,13 +1,13 @@
 .banner-container {
   max-width: 1020px;
   margin: 0 auto;
-  padding: 0 24px 80px;
+  padding: 0 24px 6px;
 }
 
 main {
   max-width: 1020px;
   margin: 0 auto;
-  padding: 0 24px 80px;
+  padding: 0 24px 0;
   display: flex;
   gap: 20px;
   
@@ -18,7 +18,7 @@ main {
   background: rgb(39, 39, 39);
   border-radius: 0 0 14px 14px;
   height: 200px;
-  margin-bottom: -70px;
+  margin-bottom: -54px;
   border: 1px solid black;
   border-top: none;
   overflow: hidden;
@@ -67,7 +67,7 @@ main {
     position: relative;
     cursor: pointer;
     margin-left: 20px;
-    margin-top: -75px;
+    margin-top: -62px;
     z-index: 5;
 }
 
@@ -109,8 +109,8 @@ main {
 
 .profile-info {
   flex: 1;
-  padding-bottom: 4px;
-  margin-top: -68px;
+  padding-bottom: 0;
+  margin-top: -54px;
   z-index: 5;
 }
 
@@ -266,15 +266,21 @@ main {
 .bd-container {
   max-width: 1020px;
   margin: 0 auto;
-  margin-top: -50px;
+  margin-top: 0;
   padding: 0 24px 80px;
   display: flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
   gap: 40px;
-  margin-top: -670px;
 }
+
+/* Remove any default top margins between sections */
+main,
+.bd-container {
+  margin-bottom: 0;
+}
+
 
 .cards {
   display: flex;
@@ -302,6 +308,51 @@ main {
 
 .db-container p {
   color: #9F9797;
+}
+
+/* Most recent track card: top-left aligned and wrapping */
+.recent-track-container {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 18px 18px;
+  box-sizing: border-box;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.recent-track-shelf {
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFD000;
+  line-height: 1.2;
+}
+
+.recent-track-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.recent-track-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recent-track-name {
+  font-weight: 700;
+  color: #fff;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.recent-track-link {
+  color: #9F9797;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 

@@ -31,7 +31,34 @@ def landing_page():
 @bp.route("/profile")
 @login_required
 def profile_page():
-    return render_template("profile.html", user=current_user)
+    latest_track = (
+        db.session.query(Track)
+        .join(Shelf, Track.shelf_id == Shelf.id)
+        .filter(Shelf.user_id == current_user.id)
+        .order_by(Track.created_at.desc())
+        .first()
+    )
+
+    latest_shelf = None
+    latest_shelf_tracks = []
+    if latest_track:
+        latest_shelf = Shelf.query.filter_by(
+            id=latest_track.shelf_id, user_id=current_user.id
+        ).first()
+        if latest_shelf:
+            latest_shelf_tracks = (
+                Track.query.filter_by(shelf_id=latest_shelf.id)
+                .order_by(Track.created_at.desc())
+                .all()
+            )
+
+    return render_template(
+        "profile.html",
+        user=current_user,
+        latest_track=latest_track,
+        latest_shelf=latest_shelf,
+        latest_shelf_tracks=latest_shelf_tracks,
+    )
 
 
 @bp.route("/tracks")

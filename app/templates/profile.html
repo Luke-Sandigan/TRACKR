@@ -70,6 +70,26 @@
 </main>
           <div class="bd-container">
      
+            <div class="cards recent-track-card">
+              <div class="title"> Most Recent Track </div>
+                <div class="db-container recent-track-container">
+                  {% if latest_shelf %}
+                    <div class="recent-track-shelf">{{ latest_shelf.name }}</div>
+                    <div class="recent-track-list">
+                      {% for t in latest_shelf_tracks %}
+                        <div class="recent-track-item">
+                          <div class="recent-track-name">{{ t.name }}</div>
+                          <div class="recent-track-link">{{ t.link }}</div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <h1> No tracks yet </h1>
+                    <p> Add a link in Tracks to see it here </p>
+                  {% endif %}
+                </div>
+            </div>
+
             <div class="cards">
               <div class="title"> Dashboard </div>
                 <div class="db-container">

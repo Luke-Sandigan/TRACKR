@@ -219,6 +219,9 @@ async function renderTracks() {
         const trackDiv = document.createElement("div");
         trackDiv.classList.add("addTrack");
 
+        const contentDiv = document.createElement("div");
+        contentDiv.classList.add("trackContent");
+
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("trackName");
         nameDiv.textContent = track.name;
@@ -258,8 +261,9 @@ async function renderTracks() {
             window.open(url, "_blank");
         });
 
-        trackDiv.appendChild(nameDiv);
-        trackDiv.appendChild(linkDiv);
+        contentDiv.appendChild(nameDiv);
+        contentDiv.appendChild(linkDiv);
+        trackDiv.appendChild(contentDiv);
         trackDiv.appendChild(removeBtn); 
         tracksContainer.appendChild(trackDiv);
     });
