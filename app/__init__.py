@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
+import os
 
 from .extensions import db, login, oauth
 from .config import Config
@@ -38,8 +39,11 @@ def create_app():
     from . import models
 
     # Ensure tables exist for out-of-the-box dev (SQLite default).
-    # In production, prefer using migrations (`flask db upgrade`).
-    with app.app_context():
-        db.create_all()
+    # On serverless (e.g. Vercel) with Supabase Postgres, use migrations instead.
+    db_uri = (app.config.get("SQLALCHEMY_DATABASE_URI") or "").lower()
+    auto_create = os.environ.get("AUTO_CREATE_DB", "").lower() in ("1", "true", "yes")
+    if db_uri.startswith("sqlite") or auto_create:
+        with app.app_context():
+            db.create_all()
 
     return app
