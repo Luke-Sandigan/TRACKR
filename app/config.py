@@ -3,7 +3,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = "trackr_db12345"
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://postgres:hr@localhost:5432/trackr_db"
+    # Prefer DATABASE_URL when deployed; default to local SQLite for dev.
+    # This makes the app run out-of-the-box without requiring Postgres.
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "DATABASE_URL",
+        "sqlite:///" + os.path.join(basedir, "..", "instance", "trackr.db"),
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')

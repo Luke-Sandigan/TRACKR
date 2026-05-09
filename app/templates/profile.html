@@ -49,14 +49,14 @@
       <div class="name-row">
                 <div class="name-group">
                   <span class="name-label">Firstname</span>
-                  <span class="name-value" id="displayFirstname"> None </span>
+                  <span class="name-value" id="displayFirstname">{{ user.first_name }}</span>
                 </div>
 
                 <div class="name-divider"></div>
 
                 <div class="name-group">
                   <span class="name-label">Surname</span>
-                  <span class="name-value" id="displaySurname"> None </span>
+                  <span class="name-value" id="displaySurname">{{ user.last_name }}</span>
                 </div>
               </div>
             </div>
@@ -102,19 +102,19 @@
       <div class="cs-row">
         <div class="cs-input-group">
           <label class="cs-label">Firstname</label>
-          <input id="editFirstName" placeholder="First Name">
+          <input id="editFirstName" value="{{ user.first_name }}" placeholder="First Name">
         </div>
 
         <div class="cs-input-group">
           <label class="cs-label">Lastname</label>
-          <input id="editLastName" placeholder="Last Name">
+          <input id="editLastName" value="{{ user.last_name }}" placeholder="Last Name">
         </div>
       </div>
 
       <div class="cs-row">
         <div class="cs-input-group">
           <label class="cs-label">Email</label>
-          <input id="editEmail" placeholder="Add Email">
+          <input id="editEmail" value="{{ user.email }}" placeholder="Add Email">
         </div>
 
         <div class="cs-input-group">

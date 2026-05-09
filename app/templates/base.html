@@ -24,7 +24,11 @@
     </div>
 
     <ul class="nav-menu">
-        <li>Browse Collection <i class="ph ph-caret-down"></i></li>
+        <li>
+            <a href="{{ url_for('main.tracks_page') }}" style="text-decoration:none; color:inherit;">
+                Browse Collection <i class="ph ph-caret-down"></i>
+            </a>
+        </li>
     </ul>
 
     <div class="nav-right">
@@ -57,7 +61,7 @@
         </div>
         
         <ul class="list">
-            <li> <a href="" class="goProfile"> <i class="ph ph-lego-smiley"></i> Profile </a> </li>     
+            <li> <a href="{{ url_for('main.profile_page') }}" class="goProfile"> <i class="ph ph-lego-smiley"></i> Profile </a> </li>     
         </ul>
 
     <div href=""  class="listLabel"> <span>  Shelf </span> </div>

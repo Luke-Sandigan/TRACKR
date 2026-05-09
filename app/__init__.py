@@ -37,6 +37,9 @@ def create_app():
     # register models
     from . import models
 
-    print(app.config["SQLALCHEMY_DATABASE_URI"])
+    # Ensure tables exist for out-of-the-box dev (SQLite default).
+    # In production, prefer using migrations (`flask db upgrade`).
+    with app.app_context():
+        db.create_all()
 
     return app

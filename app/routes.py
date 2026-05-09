@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 import sqlalchemy as sa
 
 from app.extensions import db, oauth
-from app.models import User
+from app.models import User, Shelf, Track
 from .forms import LoginForm
 
 bp = Blueprint("main", __name__)
@@ -225,3 +225,106 @@ def get_user(user_id):
         "last_name": user.last_name,
         "email": user.email
     })
+
+
+# =====================
+# SHELVES / TRACKS API
+# =====================
+
+def _owner_user_id():
+    return current_user.id if current_user.is_authenticated else None
+
+
+@bp.get("/api/shelves")
+def list_shelves():
+    shelves = (
+        Shelf.query.filter_by(user_id=_owner_user_id())
+        .order_by(Shelf.created_at.desc())
+        .all()
+    )
+    return jsonify([
+        {"id": s.id, "name": s.name, "created_at": s.created_at.isoformat() if s.created_at else None}
+        for s in shelves
+    ])
+
+
+@bp.post("/api/shelves")
+def create_shelf():
+    data = request.get_json(silent=True) or {}
+    name = (data.get("name") or "").strip()
+    if not name:
+        return jsonify({"error": "Shelf name is required"}), 400
+
+    # Basic de-dupe per user
+    existing = Shelf.query.filter_by(user_id=_owner_user_id(), name=name).first()
+    if existing:
+        return jsonify({"id": existing.id, "name": existing.name}), 200
+
+    shelf = Shelf(name=name, user_id=_owner_user_id())
+    db.session.add(shelf)
+    db.session.commit()
+    return jsonify({"id": shelf.id, "name": shelf.name}), 201
+
+
+@bp.delete("/api/shelves/<int:shelf_id>")
+def delete_shelf(shelf_id: int):
+    shelf = Shelf.query.filter_by(id=shelf_id, user_id=_owner_user_id()).first()
+    if not shelf:
+        return jsonify({"error": "Shelf not found"}), 404
+    db.session.delete(shelf)
+    db.session.commit()
+    return jsonify({"ok": True})
+
+
+@bp.get("/api/shelves/<int:shelf_id>/tracks")
+def list_tracks(shelf_id: int):
+    shelf = Shelf.query.filter_by(id=shelf_id, user_id=_owner_user_id()).first()
+    if not shelf:
+        return jsonify({"error": "Shelf not found"}), 404
+    return jsonify([
+        {
+            "id": t.id,
+            "shelf_id": t.shelf_id,
+            "name": t.name,
+            "link": t.link,
+            "created_at": t.created_at.isoformat() if t.created_at else None,
+        }
+        for t in shelf.tracks
+    ])
+
+
+@bp.post("/api/tracks")
+def create_track():
+    data = request.get_json(silent=True) or {}
+    shelf_id = data.get("shelf_id")
+    name = (data.get("name") or "").strip()
+    link = (data.get("link") or "").strip()
+
+    if not shelf_id:
+        return jsonify({"error": "shelf_id is required"}), 400
+    if not name or not link:
+        return jsonify({"error": "name and link are required"}), 400
+
+    shelf = Shelf.query.filter_by(id=int(shelf_id), user_id=_owner_user_id()).first()
+    if not shelf:
+        return jsonify({"error": "Shelf not found"}), 404
+
+    track = Track(shelf_id=shelf.id, name=name, link=link)
+    db.session.add(track)
+    db.session.commit()
+    return jsonify({"id": track.id, "shelf_id": track.shelf_id, "name": track.name, "link": track.link}), 201
+
+
+@bp.delete("/api/tracks/<int:track_id>")
+def delete_track(track_id: int):
+    track = (
+        db.session.query(Track)
+        .join(Shelf, Track.shelf_id == Shelf.id)
+        .filter(Track.id == track_id, Shelf.user_id == _owner_user_id())
+        .first()
+    )
+    if not track:
+        return jsonify({"error": "Track not found"}), 404
+    db.session.delete(track)
+    db.session.commit()
+    return jsonify({"ok": True})
