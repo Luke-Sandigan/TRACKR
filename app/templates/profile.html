@@ -11,22 +11,18 @@
         <div class="banner-hover-overlay" id="bannerOverlay">
             <span>Change Background</span>
         </div>
-      <input type="file" id="bgFileInput" accept="image/*" style="display:none"/>
+        <input type="file" id="bgFileInput" accept="image/*" style="display:none"/>
     </div>
 </div>
 
 <main>
 
 <div class="pfp-container" id="pfpContainer" onclick="document.getElementById('pfpFileInput').click()">
-
-    <img id="profileImage"  src="../static/images/default-pfp.png" alt="pfp-image">
-
+    <img id="profileImage" src="{{ url_for('static', filename='images/default-pfp.png') }}" alt="pfp-image">
     <input type="file" id="pfpFileInput" accept="image/*" hidden>
-
     <div class="pfp-overlay">
         <span>Change PFP</span>
     </div>
-
 </div>
 
     <div class="profile-info">
@@ -35,126 +31,187 @@
         <div class="username-text" id="displayUsername">{{ user.username }}</div>
 
         <div class="profile-btns">
-          <button class="btn-yellow" id="editProfileBtn">
-            Edit Profile
-            <i class="ph ph-note-pencil"></i>
-          </button>
+            <button class="btn-yellow" id="editProfileBtn">
+                Edit Profile
+                <i class="ph ph-note-pencil"></i>
+            </button>
 
-          <button class="btn-yellow">
-            Public Profile
-            <i class="ph ph-eye"></i>
-          </button>
-    </div>
+            <button class="btn-yellow">
+                Public Profile
+                <i class="ph ph-eye"></i>
+            </button>
+        </div>
 
-      <div class="name-row">
-                <div class="name-group">
-                  <span class="name-label">Firstname</span>
-                  <span class="name-value" id="displayFirstname">{{ user.first_name }}</span>
-                </div>
-
-                <div class="name-divider"></div>
-
-                <div class="name-group">
-                  <span class="name-label">Surname</span>
-                  <span class="name-value" id="displaySurname">{{ user.last_name }}</span>
-                </div>
-              </div>
+        <div class="name-row">
+            <div class="name-group">
+                <span class="name-label">Firstname</span>
+                <span class="name-value" id="displayFirstname">{{ user.first_name }}</span>
             </div>
-            
-          </div>
 
+            <div class="name-divider"></div>
 
-
-
+            <div class="name-group">
+                <span class="name-label">Surname</span>
+                <span class="name-value" id="displaySurname">{{ user.last_name }}</span>
+            </div>
+        </div>
+    </div>
 
 </main>
-          <div class="bd-container">
-     
-            <div class="cards recent-track-card">
-              <div class="title"> Most Recent Track </div>
-                <div class="db-container recent-track-container">
-                  {% if latest_shelf %}
-                    <div class="recent-track-shelf">{{ latest_shelf.name }}</div>
-                    <div class="recent-track-list">
-                      {% for t in latest_shelf_tracks %}
+
+<div class="bd-container">
+
+    <div class="cards recent-track-card">
+        <div class="title">Most Recent Track</div>
+        <div class="db-container recent-track-container">
+            {% if latest_shelf %}
+                <div class="recent-track-shelf">{{ latest_shelf.name }}</div>
+                <div class="recent-track-list">
+                    {% for t in latest_shelf_tracks %}
                         <div class="recent-track-item">
-                          <div class="recent-track-name">{{ t.name }}</div>
-                          <div class="recent-track-link">{{ t.link }}</div>
+                            <div class="recent-track-name">{{ t.name }}</div>
+                            <div class="recent-track-link">{{ t.link }}</div>
                         </div>
-                      {% endfor %}
-                    </div>
-                  {% else %}
-                    <h1> No tracks yet </h1>
-                    <p> Add a link in Tracks to see it here </p>
-                  {% endif %}
+                    {% endfor %}
                 </div>
-            </div>
-
-            <div class="cards">
-              <div class="title"> Dashboard </div>
-                <div class="db-container">
-                  <h1> COMING SOON! </h1>
-                  <p> Dashboard Analytics are on their way </p>
-                </div>
-            </div>
-
-          </div>
-
-
-          <div class="last-shit-buttons">
-              <button class="delete">
-                Delete Account
-              </button>
-
-                <button class="logout">
-                  Logout
-                </button>
-          </div>
-
-
-<div class="cs-editModal" id="editModal">
-  <div class="cs-modalContainer">
-
-    <h2>Edit Profile</h2>
-
-    <div class="cs-modalContents">
-
-      <div class="cs-row">
-        <div class="cs-input-group">
-          <label class="cs-label">Firstname</label>
-          <input id="editFirstName" value="{{ user.first_name }}" placeholder="First Name">
+            {% else %}
+                <h1>No tracks yet</h1>
+                <p>Add a link in Tracks to see it here</p>
+            {% endif %}
         </div>
-
-        <div class="cs-input-group">
-          <label class="cs-label">Lastname</label>
-          <input id="editLastName" value="{{ user.last_name }}" placeholder="Last Name">
-        </div>
-      </div>
-
-      <div class="cs-row">
-        <div class="cs-input-group">
-          <label class="cs-label">Email</label>
-          <input id="editEmail" value="{{ user.email }}" placeholder="Add Email">
-        </div>
-
-        <div class="cs-input-group">
-          <label class="cs-label">Change Password</label>
-          <input id="editPassword" type="password" placeholder="New Password">
-        </div>
-      </div>
-
     </div>
 
-    <div class="cs-btn-container">
-      <button class="btns" id="saveProfile">Save</button>
-      <button class="btns" id="closeModal">Cancel</button>
+    <div class="cards">
+        <div class="title">Dashboard</div>
+        <div class="db-container">
+            <h1>COMING SOON!</h1>
+            <p>Dashboard Analytics are on their way</p>
+        </div>
     </div>
-
-  </div>
-
 
 </div>
 
-<script src="{{ url_for('static', filename='js/js-profile.js') }}"></script>
+
+<div class="last-shit-buttons">
+    <button class="delete" id="deleteAccountBtn">
+        Delete Account
+    </button>
+
+    <button class="logout" onclick="window.location.href='{{ url_for('main.logout') }}'">
+        Logout
+    </button>
+</div>
+
+
+<div class="cs-editModal" id="editModal">
+    <div class="cs-modalContainer">
+
+        <h2>Edit Profile</h2>
+
+        <div class="cs-modalContents">
+
+            <div class="cs-row">
+                <div class="cs-input-group">
+                    <label class="cs-label">Firstname</label>
+                    <input id="editFirstName" value="{{ user.first_name }}" placeholder="First Name">
+                </div>
+
+                <div class="cs-input-group">
+                    <label class="cs-label">Lastname</label>
+                    <input id="editLastName" value="{{ user.last_name }}" placeholder="Last Name">
+                </div>
+            </div>
+
+            <div class="cs-row">
+                <div class="cs-input-group">
+                    <label class="cs-label">Email</label>
+                    <input id="editEmail" value="{{ user.email }}" placeholder="Add Email">
+                </div>
+
+                <div class="cs-input-group">
+                    <label class="cs-label">Change Password</label>
+                    <input id="editPassword" type="password" placeholder="New Password">
+                </div>
+            </div>
+
+        </div>
+
+        <div id="edit-error" style="color:red; font-size:0.85em; padding: 4px 0; display:none;"></div>
+
+        <div class="cs-btn-container">
+            <button class="btns" id="saveProfile">Save</button>
+            <button class="btns" id="closeModal">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// ---- PFP Upload ----
+const pfpInput = document.getElementById("pfpFileInput");
+const profileImage = document.getElementById("profileImage");
+const pfpContainer = document.getElementById("pfpContainer");
+
+if (pfpContainer && pfpInput && profileImage) {
+    pfpContainer.addEventListener("click", () => pfpInput.click());
+    pfpInput.addEventListener("change", () => {
+        const file = pfpInput.files[0];
+        if (file && file.type.startsWith("image/")) {
+            profileImage.src = URL.createObjectURL(file);
+        } else {
+            alert("Please select a valid image file.");
+        }
+    });
+}
+
+// ---- Edit Modal ----
+const editBtn = document.getElementById("editProfileBtn");
+const editModal = document.getElementById("editModal");
+const closeBtn = document.getElementById("closeModal");
+const saveBtn = document.getElementById("saveProfile");
+const editError = document.getElementById("edit-error");
+
+editBtn?.addEventListener("click", () => editModal.style.display = "flex");
+closeBtn?.addEventListener("click", () => editModal.style.display = "none");
+
+saveBtn?.addEventListener("click", async () => {
+    editError.style.display = "none";
+
+    const data = {
+        first_name: document.getElementById("editFirstName").value.trim(),
+        last_name: document.getElementById("editLastName").value.trim(),
+        email: document.getElementById("editEmail").value.trim(),
+        password: document.getElementById("editPassword").value,
+    };
+
+    try {
+        const res = await fetch("/api/users/me", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (res.ok) {
+            document.getElementById("displayFirstname").textContent = data.first_name;
+            document.getElementById("displaySurname").textContent = data.last_name;
+            editModal.style.display = "none";
+        } else {
+            editError.textContent = result.error || "Failed to save.";
+            editError.style.display = "block";
+        }
+    } catch (err) {
+        editError.textContent = "Network error.";
+        editError.style.display = "block";
+    }
+});
+
+// ---- Delete Account ----
+document.getElementById("deleteAccountBtn")?.addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+        fetch("/api/users/me", { method: "DELETE" })
+            .then(res => { if (res.ok) window.location.href = "/"; });
+    }
+});
+</script>
 
 {% endblock %}

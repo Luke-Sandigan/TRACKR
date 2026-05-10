@@ -7,15 +7,11 @@
     <title>TRACKR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
     />
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 
 <body>
@@ -27,8 +23,11 @@
 
     <ul class="nav-menu">
         <li>Start Tracking <i class="ph ph-caret-down"></i></li>
-        <li>Upload Track <i class="ph ph-caret-down"></i></li>
-        <li>Browse Track <i class="ph ph-caret-down"></i></li>
+        <li>
+            <a href="{{ url_for('main.tracks_page') }}" style="text-decoration:none; color:inherit;">
+                Browse Track <i class="ph ph-caret-down"></i>
+            </a>
+        </li>
     </ul>
 
     <div class="nav-right">
@@ -37,11 +36,11 @@
                 <i class="ph ph-list-magnifying-glass"></i>
                 <input type="text" id="search-track" placeholder="Search Track">
             </div>
-        </form> 
-            
+        </form>
+
         <div class="auth-icon-container">
             <div class="auth-buttons">
-                <a href="/login" class="login-link">Login</a>
+                <a href="{{ url_for('main.login') }}" class="login-link">Login</a>
                 <button onclick="window.location.href='{{ url_for('main.signup_page') }}'" class="signup-btn">Sign Up</button>
             </div>
 
@@ -50,12 +49,9 @@
                 <i class="ph ph-seal-question"></i>
                 <i class="ph ph-globe-simple"></i>
             </div>
-         </div>
-
+        </div>
     </div>
 </nav>
-
-
 
 <div class="hero-container">
 
@@ -68,13 +64,12 @@
         <p>Track price changes across online stores automatically, all in one place.</p>
 
         <div class="header-btn-container">
-            <button onclick="window.location.href='{{ url_for('main.signup_page') }}'"  class="btn-signup">Sign Up</button>
+            <button onclick="window.location.href='{{ url_for('main.signup_page') }}'" class="btn-signup">Sign Up</button>
 
             <button class="btn-premium">
                 <i class="ph ph-arrows-in-cardinal"></i>
                 Go Premium
             </button>
-
         </div>
     </div>
 
@@ -86,7 +81,3 @@
 </body>
 
 </html>
-
-
-
-

@@ -1,24 +1,7 @@
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from app import create_app
 
-app = Flask(__name__)
+app = create_app()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL:
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy()
-
-db.init_app(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
-
-@app.route("/")
-def home():
-    return "TRACKR connected to Supabase!"
+# for Vercel Flask detection
+def handler(environ, start_response):
+    return app(environ, start_response)

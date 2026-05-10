@@ -1,25 +1,25 @@
-const menuButton = document.querySelector(".js-menu");
-const sideBar = document.querySelector(".js-sidebar");
-const overlay = document.querySelector(".js-overlay");
-const closeBtn = document.querySelector(".js-close-btn");
+{
+    const menuButton = document.querySelector(".js-menu");
+    const sideBar = document.querySelector(".js-sidebar");
+    const overlay = document.querySelector(".js-overlay");
+    const closeBtn = document.querySelector(".js-close-btn");
 
-if (!menuButton || !sideBar || !overlay || !closeBtn) {
-    // Not all pages include the sidebar UI.
-} else {
+    if (!menuButton || !sideBar || !overlay || !closeBtn) {
+    } else {
 
-    menuButton.addEventListener("click", ()=> {
-        sideBar.classList.toggle("active");
-        overlay.classList.toggle("active");
-    })
+        menuButton.addEventListener("click", () => {
+            sideBar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        });
 
-    closeBtn.addEventListener("click", ()=> {
-        sideBar.classList.remove("active");
-        overlay.classList.remove("active");
-    })
+        closeBtn.addEventListener("click", () => {
+            sideBar.classList.remove("active");
+            overlay.classList.remove("active");
+        });
 
-    overlay.addEventListener("click", () => {
-        sideBar.classList.remove("active");
-        overlay.classList.remove("active");
-    });
+        overlay.addEventListener("click", () => {
+            sideBar.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+    }
 }
-

@@ -17,10 +17,13 @@
 
 <body>
 
-<!-- NAVBAR (ONLY HERE) -->
+<!-- NAVBAR -->
 <nav class="nav-container">
     <div class="nav-left">
-        <img src="{{ url_for('static', filename='images/trackr-logo.png') }}" alt="logo" id="trackr-logo">
+        <img src="{{ url_for('static', filename='images/trackr-logo.png') }}"
+             alt="logo" id="trackr-logo"
+             onclick="window.location.href='{{ url_for('main.landing_page') }}'"
+             style="cursor:pointer;">
     </div>
 
     <ul class="nav-menu">
@@ -35,12 +38,11 @@
 
         {% block navbar_search %}{% endblock %}
 
-        
         <div class="auth-icon-container">
             <div class="auth-buttons">
-                <a href="/login" class="logout-link">Logout</a>
+                <a href="{{ url_for('main.logout') }}" class="logout-link">Logout</a>
             </div>
-            
+
             <div class="nav-icons">
                 <i class="ph ph-download-simple"></i>
                 <i class="ph ph-seal-question"></i>
@@ -50,32 +52,34 @@
     </div>
 </nav>
 
-<!-- SIDEBAR (ONLY HERE) -->
+<!-- SIDEBAR -->
 <sidebar>
     <button class="cs-btn-style js-menu"> <i class="ph ph-arrow-fat-lines-right"></i> </button>
-    <div class="cs-overlay js-overlay"> </div>
+    <div class="cs-overlay js-overlay"></div>
     <div class="cs-sidebar js-sidebar">
         <div class="cs-btn-container">
-        <div class="menu"> Menu </div> 
+            <div class="menu">Menu</div>
             <button class="cs-close-btn js-close-btn"> <i class="ph ph-arrow-fat-lines-left"></i> </button>
         </div>
-        
+
         <ul class="list">
-            <li> <a href="{{ url_for('main.profile_page') }}" class="goProfile"> <i class="ph ph-lego-smiley"></i> Profile </a> </li>     
+            <li>
+                <a href="{{ url_for('main.profile_page') }}" class="goProfile">
+                    <i class="ph ph-lego-smiley"></i> Profile
+                </a>
+            </li>
         </ul>
 
-    <div href=""  class="listLabel"> <span>  Shelf </span> </div>
-    <div class="addListContainer">     
-        <input class="addList" type="text" placeholder="Add Shelf">
-        <button class="addListButton"> Add</button>
-    </div>
+        <div class="listLabel"><span>Shelf</span></div>
+        <div class="addListContainer">
+            <input class="addList" type="text" placeholder="Add Shelf">
+            <button class="addListButton">Add</button>
+        </div>
 
-
-    <div class="listParent"> 
-    </div>
-
+        <div class="listParent"></div>
     </div>
 </sidebar>
+
 <!-- PAGE CONTENT -->
 {% block content %}{% endblock %}
 
