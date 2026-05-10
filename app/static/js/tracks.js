@@ -72,7 +72,11 @@ async function loadShelves() {
 function pickDefaultShelfId() {
     const fromUrl = getCurrentShelfFromUrl();
     if (fromUrl && shelves.some(s => s.id === fromUrl)) return fromUrl;
-    return shelves[0]?.id ?? null;
+    if (shelves.length > 0) {
+        window.history.replaceState({}, "", `/tracks?shelf=${shelves[0].id}`);
+        return shelves[0].id;
+    }
+    return null;
 }
 
 // =====================

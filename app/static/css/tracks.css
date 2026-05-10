@@ -246,3 +246,52 @@ section {
 .addTrackButton:hover {
     background-color: rgb(216, 219, 22);
 }
+
+/* ===================== */
+/* RECENT SEARCH AREA */
+/* ===================== */
+
+.recent-searches-panel {
+    width: 220px;
+    min-width: 220px;
+    padding: 20px 15px;
+    box-sizing: border-box;
+    color: white;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 30px;
+}
+
+.recent-searches-title {
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.recent-item {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.recent-item:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.recent-empty {
+    font-size: 13px;
+    opacity: 0.45;
+    font-style: italic;
+}
