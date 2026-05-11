@@ -61,6 +61,44 @@
 
 <div class="bd-container">
 
+    <!-- STAT CARDS ROW -->
+    <div class="stat-cards-row">
+        <div class="stat-card">
+            <div class="stat-card-icon"><i class="ph ph-stack"></i></div>
+            <div class="stat-card-body">
+                <div class="stat-card-value" id="statShelves">—</div>
+                <div class="stat-card-label">Shelves</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-icon"><i class="ph ph-tag"></i></div>
+            <div class="stat-card-body">
+                <div class="stat-card-value" id="statTracks">—</div>
+                <div class="stat-card-label">Tracked Items</div>
+            </div>
+        </div>
+        <div class="stat-card stat-card--savings">
+            <div class="stat-card-icon"><i class="ph ph-piggy-bank"></i></div>
+            <div class="stat-card-body">
+                <div class="stat-card-value" id="statSavings">—</div>
+                <div class="stat-card-label">Total Savings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRICE DASHBOARD CHART -->
+    <div class="cards chart-card">
+        <div class="title">Price Dashboard</div>
+        <div class="db-container chart-container" id="chartContainer">
+            <div id="chartEmpty" style="display:none; flex-direction:column; align-items:center; gap:10px; color:rgba(255,255,255,0.3);">
+                <i class="ph ph-chart-bar" style="font-size:36px; opacity:0.4;"></i>
+                <p style="margin:0; font-size:13px;">Add prices to your tracked items to see the chart</p>
+            </div>
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- MOST RECENT TRACK -->
     <div class="cards recent-track-card">
         <div class="title">Most Recent Track</div>
         <div class="db-container recent-track-container">
@@ -68,9 +106,27 @@
                 <div class="recent-track-shelf">{{ latest_shelf.name }}</div>
                 <div class="recent-track-list">
                     {% for t in latest_shelf_tracks %}
-                        <div class="recent-track-item">
+                        <div class="recent-track-item" onclick="window.open('{{ t.link }}', '_blank')" style="cursor:pointer;">
                             <div class="recent-track-name">{{ t.name }}</div>
+                            {% if t.original_price or t.current_price %}
+                            <div class="recent-track-prices">
+                                {% if t.original_price %}
+                                <span class="rtp-original">₱{{ "%.2f"|format(t.original_price) }}</span>
+                                {% endif %}
+                                {% if t.current_price %}
+                                <span class="rtp-arrow">→</span>
+                                <span class="rtp-current">₱{{ "%.2f"|format(t.current_price) }}</span>
+                                {% endif %}
+                                {% if t.original_price and t.current_price and t.original_price > t.current_price %}
+                                <span class="rtp-badge">-{{ ((t.original_price - t.current_price) / t.original_price * 100)|int }}%</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            {% if t.notes %}
+                            <div class="recent-track-link">📝 {{ t.notes }}</div>
+                            {% else %}
                             <div class="recent-track-link">{{ t.link }}</div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
@@ -81,15 +137,8 @@
         </div>
     </div>
 
-    <div class="cards">
-        <div class="title">Dashboard</div>
-        <div class="db-container">
-            <h1>COMING SOON!</h1>
-            <p>Dashboard Analytics are on their way</p>
-        </div>
-    </div>
-
 </div>
+
 
 
 <div class="last-shit-buttons">
@@ -215,3 +264,141 @@ document.getElementById("deleteAccountBtn")?.addEventListener("click", () => {
 </script>
 
 {% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// ---- Dashboard Stats + Chart ----
+(async function loadDashboard() {
+    try {
+        const res = await fetch("/api/stats");
+        if (!res.ok) return;
+        const data = await res.json();
+
+        // Stat cards
+        document.getElementById("statShelves").textContent = data.shelf_count ?? 0;
+        document.getElementById("statTracks").textContent = data.track_count ?? 0;
+        const savings = data.total_savings ?? 0;
+        document.getElementById("statSavings").textContent =
+            "₱" + Number(savings).toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        // Chart
+        const chartData = data.chart_data || [];
+        const canvas = document.getElementById("priceChart");
+        const emptyMsg = document.getElementById("chartEmpty");
+
+        if (!chartData.length) {
+            canvas.style.display = "none";
+            emptyMsg.style.display = "flex";
+            return;
+        }
+
+        // Color palette for lines (one per tracked item)
+        const palette = [
+            "#FFD000", "#60a5fa", "#f472b6", "#34d399",
+            "#fb923c", "#a78bfa", "#38bdf8", "#f87171",
+            "#4ade80", "#e879f9", "#facc15", "#2dd4bf",
+        ];
+
+        // Each tracked item = one line; X axis = [Original Price, Sale Price]
+        const datasets = chartData
+            .filter(d => d.original_price != null || d.current_price != null)
+            .map((d, i) => {
+                const color = palette[i % palette.length];
+                const hasBoth = d.original_price != null && d.current_price != null;
+                const savings = hasBoth
+                    ? Math.round(((d.original_price - d.current_price) / d.original_price) * 100)
+                    : null;
+
+                return {
+                    label: d.name.length > 20 ? d.name.slice(0, 18) + "…" : d.name,
+                    data: [d.original_price ?? null, d.current_price ?? null],
+                    borderColor: color,
+                    backgroundColor: color + "22",
+                    pointBackgroundColor: color,
+                    pointBorderColor: "#1a1a1a",
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    borderWidth: 2.5,
+                    tension: 0.3,
+                    fill: false,
+                    _savings: savings,
+                };
+            });
+
+        new Chart(canvas, {
+            type: "line",
+            data: {
+                labels: ["Original Price", "Sale Price"],
+                datasets,
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: "index", intersect: false },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: "rgba(255,255,255,0.7)",
+                            font: { family: "Inter", size: 11 },
+                            boxWidth: 12,
+                            padding: 14,
+                            usePointStyle: true,
+                            pointStyle: "circle",
+                        },
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) {
+                                const val = ctx.parsed.y;
+                                if (val == null) return null;
+                                const formatted = "₱" + val.toLocaleString("en-PH", { minimumFractionDigits: 2 });
+                                const ds = ctx.dataset;
+                                // On the Sale Price point, show savings if available
+                                if (ctx.dataIndex === 1 && ds._savings != null && ds._savings > 0) {
+                                    return `${ds.label}: ${formatted}  🏷 Save ${ds._savings}%`;
+                                }
+                                return `${ds.label}: ${formatted}`;
+                            },
+                            title: function(items) {
+                                return items[0].label;
+                            }
+                        },
+                        backgroundColor: "rgba(15,15,15,0.96)",
+                        titleColor: "#FFD000",
+                        bodyColor: "rgba(255,255,255,0.85)",
+                        borderColor: "rgba(255,208,0,0.2)",
+                        borderWidth: 1,
+                        padding: 14,
+                        caretSize: 6,
+                    },
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: "rgba(255,255,255,0.7)",
+                            font: { family: "Inter", size: 12, weight: "600" },
+                        },
+                        grid: { color: "rgba(255,255,255,0.06)" },
+                    },
+                    y: {
+                        ticks: {
+                            color: "rgba(255,255,255,0.6)",
+                            font: { family: "Inter", size: 11 },
+                            callback: v => "₱" + v.toLocaleString("en-PH"),
+                        },
+                        grid: { color: "rgba(255,255,255,0.06)" },
+                        beginAtZero: false,
+                    },
+                },
+            },
+        });
+    } catch (e) {
+        console.error("Dashboard load error:", e);
+    }
+})();
+</script>
+{% endblock %}
+

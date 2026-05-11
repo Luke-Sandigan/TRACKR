@@ -21,8 +21,19 @@
 
         <div class="addLinkContainer">
             <input type="text" class="addName" placeholder="Name">
-            <input type="text" class="addLink" placeholder="Add Your Link Here">
+            <input type="text" class="addLink" placeholder="Link (e.g. shopee.ph/...)">
             <button class="addTrackButton"> Add </button>
+        </div>
+        <div class="addPriceContainer">
+            <div class="price-input-wrapper">
+                <span class="price-symbol">₱</span>
+                <input type="number" class="addOriginalPrice" placeholder="Original Price" step="0.01" min="0">
+            </div>
+            <div class="price-input-wrapper">
+                <span class="price-symbol discount-symbol">₱</span>
+                <input type="number" class="addCurrentPrice" placeholder="Sale Price" step="0.01" min="0">
+            </div>
+            <input type="text" class="addNotes" placeholder="Notes (optional)">
         </div>
 
         <div class="header">

@@ -93,6 +93,18 @@ class Track(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(128))
     link: so.Mapped[str] = so.mapped_column(sa.String(2048))
 
+    original_price: so.Mapped[Optional[float]] = so.mapped_column(
+        sa.Float, nullable=True
+    )
+
+    current_price: so.Mapped[Optional[float]] = so.mapped_column(
+        sa.Float, nullable=True
+    )
+
+    notes: so.Mapped[Optional[str]] = so.mapped_column(
+        sa.String(256), nullable=True
+    )
+
     created_at: so.Mapped[sa.DateTime] = so.mapped_column(
         sa.DateTime(timezone=True),
         server_default=sa.func.now(),

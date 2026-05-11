@@ -9,16 +9,9 @@ from .forms import LoginForm
 bp = Blueprint("main", __name__)
 
 
-# =====================
-# SAFE HELPER
-# =====================
 def get_user_id():
     return current_user.id if current_user.is_authenticated else None
 
-
-# =====================
-# PAGES
-# =====================
 
 @bp.route("/")
 def landing_page():
@@ -59,7 +52,6 @@ def login():
 @bp.route("/profile")
 @login_required
 def profile_page():
-    # Get the user's most recent shelf and its tracks
     latest_shelf = (
         db.session.query(Shelf)
         .filter(Shelf.user_id == current_user.id)
@@ -82,10 +74,6 @@ def logout():
     logout_user()
     return redirect(url_for("main.landing_page"))
 
-
-# =====================
-# GOOGLE OAUTH
-# =====================
 
 @bp.route("/auth/google")
 def google_login():
@@ -121,10 +109,6 @@ def google_callback():
     return redirect(url_for("main.profile_page"))
 
 
-# =====================
-# USER REGISTRATION
-# =====================
-
 @bp.post("/users")
 def create_user():
     data = request.get_json() or {}
@@ -156,10 +140,6 @@ def create_user():
 
     return jsonify({"message": "Account created! You can now log in."}), 201
 
-
-# =====================
-# SAFE API ROUTES
-# =====================
 
 @bp.get("/api/shelves")
 def list_shelves():
@@ -193,6 +173,7 @@ def create_shelf():
 
     return jsonify({"id": shelf.id, "name": shelf.name})
 
+
 @bp.delete("/api/shelves/<int:shelf_id>")
 def delete_shelf(shelf_id):
     user_id = get_user_id()
@@ -207,6 +188,7 @@ def delete_shelf(shelf_id):
     db.session.commit()
 
     return jsonify({"message": "Deleted"})
+
 
 @bp.get("/api/shelves/<int:shelf_id>")
 def get_shelf(shelf_id):
@@ -232,9 +214,17 @@ def list_tracks(shelf_id):
         return jsonify({"error": "Shelf not found"}), 404
 
     return jsonify([
-        {"id": t.id, "name": t.name, "link": t.link}
+        {
+            "id": t.id,
+            "name": t.name,
+            "link": t.link,
+            "original_price": t.original_price,
+            "current_price": t.current_price,
+            "notes": t.notes,
+        }
         for t in shelf.tracks
     ])
+
 
 @bp.post("/api/tracks")
 def create_track():
@@ -255,11 +245,87 @@ def create_track():
     if not shelf:
         return jsonify({"error": "Shelf not found"}), 404
 
-    track = Track(shelf_id=shelf.id, name=name, link=link)
+    track = Track(
+        shelf_id=shelf.id,
+        name=name,
+        link=link,
+        original_price=data.get("original_price"),
+        current_price=data.get("current_price"),
+        notes=(data.get("notes") or "").strip() or None,
+    )
     db.session.add(track)
     db.session.commit()
 
     return jsonify({"id": track.id})
+
+
+@bp.patch("/api/tracks/<int:track_id>")
+def update_track(track_id):
+    user_id = get_user_id()
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
+
+    track = (
+        db.session.query(Track)
+        .join(Shelf, Track.shelf_id == Shelf.id)
+        .filter(Track.id == track_id, Shelf.user_id == user_id)
+        .first()
+    )
+    if not track:
+        return jsonify({"error": "Track not found"}), 404
+
+    data = request.get_json() or {}
+    if "original_price" in data:
+        track.original_price = data["original_price"]
+    if "current_price" in data:
+        track.current_price = data["current_price"]
+    if "notes" in data:
+        track.notes = (data["notes"] or "").strip() or None
+
+    db.session.commit()
+    return jsonify({"message": "Updated"})
+
+
+@bp.get("/api/stats")
+@login_required
+def get_stats():
+    user_id = current_user.id
+
+    shelves = Shelf.query.filter_by(user_id=user_id).all()
+    shelf_count = len(shelves)
+
+    all_tracks = (
+        db.session.query(Track)
+        .join(Shelf, Track.shelf_id == Shelf.id)
+        .filter(Shelf.user_id == user_id)
+        .all()
+    )
+    track_count = len(all_tracks)
+
+    total_savings = sum(
+        (t.original_price - t.current_price)
+        for t in all_tracks
+        if t.original_price is not None
+        and t.current_price is not None
+        and t.original_price > t.current_price
+    )
+
+    chart_data = [
+        {
+            "name": t.name,
+            "original_price": t.original_price,
+            "current_price": t.current_price,
+        }
+        for t in all_tracks
+        if t.original_price is not None or t.current_price is not None
+    ]
+
+    return jsonify({
+        "shelf_count": shelf_count,
+        "track_count": track_count,
+        "total_savings": round(total_savings, 2),
+        "chart_data": chart_data,
+    })
 
 
 @bp.delete("/api/tracks/<int:track_id>")

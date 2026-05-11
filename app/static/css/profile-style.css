@@ -552,3 +552,123 @@ main,
 .favorite-shelf-item:hover {
     background: #2a2a2a;
 }
+
+/* ========================= */
+/* STAT CARDS ROW            */
+/* ========================= */
+
+.stat-cards-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 18px 22px;
+    transition: border-color 0.2s, transform 0.15s;
+}
+
+.stat-card:hover {
+    border-color: rgba(255,208,0,0.35);
+    transform: translateY(-2px);
+}
+
+.stat-card--savings {
+    border-color: rgba(255,208,0,0.2);
+    background: rgba(255,208,0,0.05);
+}
+
+.stat-card-icon {
+    font-size: 26px;
+    color: #FFD000;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+.stat-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-card-value {
+    font-family: 'Inter';
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+}
+
+.stat-card--savings .stat-card-value {
+    color: #FFD000;
+}
+
+.stat-card-label {
+    font-size: 10px;
+    color: #9F9797;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+}
+
+/* ========================= */
+/* CHART CARD                */
+/* ========================= */
+
+.chart-card {
+    height: 380px !important;
+}
+
+.chart-container {
+    padding: 16px !important;
+    position: relative;
+}
+
+/* ========================= */
+/* RECENT TRACK PRICES       */
+/* ========================= */
+
+.recent-track-prices {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 2px;
+    flex-wrap: wrap;
+}
+
+.rtp-original {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
+}
+
+.rtp-arrow {
+    color: rgba(255,255,255,0.25);
+    font-size: 11px;
+}
+
+.rtp-current {
+    font-size: 14px;
+    color: #FFD000;
+    font-weight: 700;
+}
+
+.rtp-badge {
+    background: rgba(34,197,94,0.18);
+    border: 1px solid rgba(34,197,94,0.4);
+    color: #4ade80;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+}
